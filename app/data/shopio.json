@@ -1,0 +1,304 @@
+{
+  "slides": [
+    {
+      "id": "1",
+      "image": "https://i.pinimg.com/1200x/5f/9f/36/5f9f36e0c40f2a7c4295cab399671dc8.jpg",
+      "title": "Premium Headphones",
+      "highlight": "TRENDING NOW",
+      "description": "Upgrade your sound with premium audio made for music lovers."
+    },
+    {
+      "id": "2",
+      "image": "https://i.pinimg.com/736x/a9/3f/33/a93f33443a2bdc3ad555a38be956e111.jpg",
+      "title": "Premium Smart Watch",
+      "highlight": "SMARTER EVERY DAY",
+      "description": "Stay connected, track your goals, and upgrade your everyday style."
+    },
+    {
+      "id": "3",
+      "image": "https://i.pinimg.com/1200x/9d/79/b0/9d79b0f40a97bb1236a02825b34b278e.jpg",
+      "title": "NIKE ",
+      "highlight": "JUST DO IT.",
+      "description": "Fresh styles. Bold energy. Built to move."
+    }
+  ],
+  "features": [
+    {
+      "id": "1",
+      "icon": "Truck",
+      "title": "Free Shipping",
+      "description": "On orders over $50"
+    },
+    {
+      "id": "2",
+      "icon": "RotateCcw",
+      "title": "Money Guarantee",
+      "description": "30 days money back"
+    },
+    {
+      "id": "3",
+      "icon": "CreditCard",
+      "title": "Secure Payment",
+      "description": "100% secure payment"
+    },
+    {
+      "id": "4",
+      "icon": "Headphones",
+      "title": "24/7 Support",
+      "description": "Dedicated support"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Electronics",
+      "items": 120,
+      "image": "https://i.pinimg.com/1200x/36/d1/f7/36d1f7838eeb16e7d4c940adf5cf0838.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Fashion",
+      "items": 150,
+      "image": "https://i.pinimg.com/736x/09/4e/23/094e23322b100577fb9a48365a3c1578.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Shoes",
+      "items": 80,
+      "image": "https://i.pinimg.com/1200x/c1/47/d7/c147d75d161d89ee196b1e3622fecb8c.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Bags",
+      "items": 60,
+      "image": "https://i.pinimg.com/736x/0f/34/48/0f34483b4a0e72a2d0df3d207a070eff.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Watches",
+      "items": 40,
+      "image": "https://i.pinimg.com/736x/c8/d8/25/c8d825da985d3cc18c92160bb40a5cd3.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Accessories",
+      "items": 70,
+      "image": "https://i.pinimg.com/736x/1a/83/c8/1a83c8eab1ef20410ad25ca5d394df03.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Smart Watch Series 8",
+      "price": 199.99,
+      "oldPrice": 249.99,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Wireless Headphones",
+      "price": 59.99,
+      "oldPrice": 89.99,
+      "discount": 33,
+      "rating": 4.7,
+      "reviews": 86,
+      "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Canon EOS Camera",
+      "price": 499.99,
+      "oldPrice": 599.99,
+      "discount": 17,
+      "rating": 4.9,
+      "reviews": 95,
+      "image": "https://i.pinimg.com/736x/91/8a/56/918a5630c23dbd06403f47281d089c92.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Nike Air Force 1",
+      "price": 89.99,
+      "oldPrice": 119.99,
+      "discount": 25,
+      "rating": 4.8,
+      "reviews": 75,
+      "image": "https://i.pinimg.com/736x/0f/5f/ef/0f5fef5eeb0f73ec63290a698b4bf980.jpg"
+    },
+    {
+      "id": "5",
+      "name": "iPhone 15 Pro",
+      "price": 899.99,
+      "oldPrice": 999.99,
+      "discount": 10,
+      "rating": 4.9,
+      "reviews": 210,
+      "image": "https://i.pinimg.com/1200x/78/5f/03/785f03456458c85d46f3bd44452edee5.jpg"
+    },
+    {
+      "id": "6",
+      "name": "MacBook Air M2",
+      "price": 999.99,
+      "oldPrice": 1199.99,
+      "discount": 17,
+      "rating": 4.8,
+      "reviews": 180,
+      "image": "https://i.pinimg.com/1200x/79/9f/6d/799f6dded9a4c35ced3d1ff12c613e9b.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Sony Wireless Speaker",
+      "price": 79.99,
+      "oldPrice": 109.99,
+      "discount": 27,
+      "rating": 4.6,
+      "reviews": 64,
+      "image": "https://i.pinimg.com/736x/b5/98/09/b59809c0c7a9f63b14a5c5798dbd07ca.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Adidas Ultraboost Shoes",
+      "price": 109.99,
+      "oldPrice": 149.99,
+      "discount": 27,
+      "rating": 4.7,
+      "reviews": 92,
+      "image": "https://i.pinimg.com/1200x/c8/33/29/c8332919c813b850727f61008fa4b36c.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Samsung Galaxy Buds",
+      "price": 69.99,
+      "oldPrice": 99.99,
+      "discount": 30,
+      "rating": 4.7,
+      "reviews": 105,
+      "image": "https://i.pinimg.com/736x/92/59/0b/92590b678596d080301c983006eec376.jpg"
+    },
+    {
+      "id": "10",
+      "name": "Gaming Mechanical Keyboard",
+      "price": 74.99,
+      "oldPrice": 99.99,
+      "discount": 25,
+      "rating": 4.8,
+      "reviews": 88,
+      "image": "https://i.pinimg.com/736x/8f/84/b2/8f84b2d5c563542aff69d16c26ff0b8a.jpg"
+    },
+    {
+      "id": "11",
+      "name": "PlayStation 5 Controller",
+      "price": 59.99,
+      "oldPrice": 74.99,
+      "discount": 20,
+      "rating": 4.9,
+      "reviews": 145,
+      "image": "https://i.pinimg.com/736x/a7/c7/9d/a7c79d08eee2af37efe5e80c9de43d17.jpg"
+    },
+    {
+      "id": "12",
+      "name": "Minimalist Backpack",
+      "price": 44.99,
+      "oldPrice": 64.99,
+      "discount": 31,
+      "rating": 4.6,
+      "reviews": 71,
+      "image": "https://i.pinimg.com/1200x/47/95/9d/47959dac3a5e9b6b8811d6c29557bd6a.jpg"
+    }
+  ],
+  "arrivals": [
+    {
+      "id": "1",
+      "name": "Fjallraven Backpack",
+      "price": 79.99,
+      "rating": 4.7,
+      "image": "https://i.pinimg.com/736x/89/44/a4/8944a4c5ca788b492e7d76891fd67a4d.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Nike Running Shoes",
+      "price": 99.99,
+      "rating": 4.8,
+      "image": "https://i.pinimg.com/736x/b3/5a/a6/b35aa68dc1bb95fb982d758a215784de.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Cotton T-Shirt",
+      "price": 24.99,
+      "rating": 4.6,
+      "image": "https://i.pinimg.com/1200x/81/27/cc/8127cc7e002c1ac912f6ea19903cf3eb.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Leather Wallet",
+      "price": 29.99,
+      "rating": 4.7,
+      "image": "https://i.pinimg.com/1200x/2c/46/5e/2c465e5513ab2e36a3ef0f0efdaf9bf2.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Indoor Plant",
+      "price": 19.99,
+      "rating": 4.5,
+      "image": "https://i.pinimg.com/736x/52/e9/f5/52e9f55be3f9ff605a658b71c07e1b8e.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "john123",
+      "address": "123 Main St, Anytown, USA",
+      "wishlist": [],
+      "cart": [],
+      "avatar": ""
+    },
+    {
+      "name": "dara",
+      "email": "dara@gmail.com",
+      "password": "dara123",
+      "id": "HOnd_Yy6j8k",
+      "wishlist": [],
+      "cart": [],
+      "avatar": ""
+    },
+    {
+      "name": "Loth Vuthy",
+      "email": "lothvuthy@gmail.com",
+      "password": "123456",
+      "id": "RvdMxNb1OI8",
+      "wishlist": [],
+      "cart": [],
+      "role": "admin",
+      "avatar": ""
+    },
+    {
+      "id": "admin-2",
+      "name": "Seak Leav Lun",
+      "email": "seakleavlun@gmail.com",
+      "password": "123456",
+      "address": "",
+      "wishlist": [],
+      "cart": [],
+      "role": "admin",
+      "avatar": ""
+    },
+    {
+      "id": "admin-3",
+      "name": "Kelu Dom",
+      "email": "keludom17@gmail.com",
+      "password": "123456",
+      "address": "",
+      "wishlist": [],
+      "cart": [],
+      "role": "admin",
+      "avatar": ""
+    }
+  ],
+  "messages": [],
+  "orders": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
