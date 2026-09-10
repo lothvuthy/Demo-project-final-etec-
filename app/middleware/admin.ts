@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(() => {
   if (!raw) return navigateTo('/auth/login')
   try {
     const user = JSON.parse(raw)
-    if (user?.role !== 'admin' || user?.email?.toLowerCase() !== 'lothvuthy@gmail.com') {
+    if (user?.role !== 'admin') {
       return navigateTo('/')
     }
   } catch {
