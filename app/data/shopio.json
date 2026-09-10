@@ -282,7 +282,16 @@
       "password": "123456",
       "address": "",
       "wishlist": [],
-      "cart": [],
+      "cart": [
+        {
+          "id": "2",
+          "name": "Wireless Headphones",
+          "price": 59.99,
+          "oldPrice": 89.99,
+          "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg",
+          "qty": 1
+        }
+      ],
       "role": "admin",
       "avatar": ""
     },
@@ -296,9 +305,49 @@
       "cart": [],
       "role": "admin",
       "avatar": ""
+    },
+    {
+      "name": "kaka",
+      "email": "kaka@gmail.com",
+      "password": "123456",
+      "wishlist": [],
+      "cart": [],
+      "role": "user",
+      "id": "38OG-ZtRuKw"
     }
   ],
   "messages": [],
-  "orders": [],
-  "$schema": "./node_modules/json-server/schema.json"
+  "orders": [
+    {
+      "userId": "admin-2",
+      "userName": "Seak Leav Lun",
+      "userEmail": "seakleavlun@gmail.com",
+      "userAddress": "",
+      "items": [
+        {
+          "id": "1",
+          "name": "Smart Watch Series 8",
+          "price": 199.99,
+          "oldPrice": 249.99,
+          "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg",
+          "qty": 1
+        },
+        {
+          "id": "2",
+          "name": "Wireless Headphones",
+          "price": 59.99,
+          "oldPrice": 89.99,
+          "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg",
+          "qty": 1
+        }
+      ],
+      "subtotal": 259.98,
+      "discount": 80,
+      "deliveryFee": 0,
+      "total": 259.98,
+      "paymentMethod": "KHQR (Bakong)",
+      "createdAt": "2026-09-10T02:30:09.867Z",
+      "id": "voM9qFHvd78"
+    }
+  ]
 }
