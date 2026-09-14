@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="js">
 import {
   Truck,
   RotateCcw,
@@ -23,8 +23,6 @@ const features = shopio.features;
 const categories = shopio.categories;
 const arrivals = shopio.arrivals;
 const polaProducts = shopio.polaproducts;
-const products = shopio.products;
-const featuredProducts = products.slice(0, 4);
 let interval = null;
 let observer = null;
 
