@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="">
 import {
   Truck,
   RotateCcw,
@@ -71,7 +71,7 @@ onUnmounted(() => {
   <div class="min-h-screen bg-white">
     <section class=" px-4 md:px-8 py-6">
       <div
-        class="relative max-w-7xl w-full  mx-auto  h-[600px] md:h-[640px] overflow-hidden rounded-3xl"
+        class="relative max-w-7xl w-full  mx-auto  h-140 md:h-150 overflow-hidden rounded-3xl"
       >
         <div
           v-for="(slide, index) in slides"
