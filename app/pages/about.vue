@@ -204,7 +204,7 @@
           <div
             class="min-w-0 p-3 sm:p-4 rounded-xl bg-linear-to-b from-orange-50 to-white border border-orange-100 shadow-sm"
           >
-            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight break-words">
+            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight wrap-break-word">
               {{ stats.customers || "50K+" }}
             </p>
             <p class="text-xs sm:text-sm md:text-base text-gray-600 leading-snug">Happy Customers</p>
@@ -212,7 +212,7 @@
           <div
             class="min-w-0 p-3 sm:p-4 rounded-xl bg-linear-to-b from-orange-50 to-white border border-orange-100 shadow-sm"
           >
-            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight break-words">
+            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight wrap-break-word">
               {{ stats.products || "1,000+" }}
             </p>
             <p class="text-xs sm:text-sm md:text-base text-gray-600 leading-snug">Products Available</p>
@@ -220,7 +220,7 @@
           <div
             class="min-w-0 p-3 sm:p-4 rounded-xl bg-linear-to-b from-orange-50 to-white border border-orange-100 shadow-sm"
           >
-            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight break-words">
+            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-2 leading-tight wrap-break-word">
               {{ stats.cities || "100+" }}
             </p>
             <p class="text-xs sm:text-sm md:text-base text-gray-600 leading-snug">Cities Served</p>

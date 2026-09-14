@@ -161,16 +161,11 @@ onMounted(loadAll)
       <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-gray-200 px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-3"><button class="lg:hidden p-2 rounded-lg hover:bg-gray-100" @click="sidebarOpen = true"><Menu /></button><div><h1 class="text-xl sm:text-2xl font-bold text-gray-900 capitalize">{{ active }}</h1><p class="text-xs sm:text-sm text-gray-500">Manage your SHopiO store</p></div></div>
         <div class="flex items-center gap-2">
-          <NuxtLink
-            to="/"
-            class="inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl border border-orange-200 bg-orange-50 text-orange-600 text-sm font-semibold hover:bg-orange-500 hover:text-white transition-colors"
-            title="Go to website"
-          >
-            <ExternalLink :size="17" />
-            <span class="hidden sm:inline">Go to website</span>
-          </NuxtLink>
-          <button class="p-2.5 rounded-xl border border-gray-200 hover:border-orange-300 hover:text-orange-500" title="Refresh" @click="loadAll"><RefreshCw :size="18" :class="loading ? 'animate-spin' : ''" /></button>
-        </div>
+  <NuxtLink to="/" class="flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-gray-200 hover:border-orange-300 hover:text-orange-500 text-sm font-medium text-gray-600" title="Go to website"><ExternalLink :size="16" /><span class="hidden sm:inline">Go to website</span></NuxtLink>
+  <button class="p-2.5 rounded-xl border border-gray-200 hover:border-orange-300 hover:text-orange-500" title="Refresh" @click="loadAll">
+    <RefreshCw :size="18" :class="loading ? 'animate-spin' : ''" />
+  </button>
+</div>
       </header>
 
       <div class="p-4 sm:p-6 lg:p-8 flex-1">
@@ -219,9 +214,12 @@ onMounted(loadAll)
                   <button class="p-2.5 text-red-500 hover:bg-red-50 rounded-xl shrink-0" title="Delete order" @click="deleteResource('orders', o.id, 'order')"><Trash2 :size="18" /></button>
                 </div>
               </div>
-              <div class="border-t border-gray-100 bg-gray-50/60 px-4 sm:px-5 py-3 flex flex-wrap gap-x-6 gap-y-2 text-xs text-gray-500">
+              <div class="border-t border-gray-100 bg-gray-50/60 px-4 sm:px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-gray-500">
                 <span>User ID: <b class="text-gray-700">{{ o.userId || orderUser(o).id || '—' }}</b></span>
                 <span v-if="o.paymentMethod">Payment: <b class="text-gray-700">{{ o.paymentMethod }}</b></span>
+                <span v-if="o.paymentReference" class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 px-2 py-0.5 font-semibold" title="Verified via Bakong KHQR">
+                  <ShieldCheck :size="12" /> Verified · {{ o.paymentReference.slice(0, 8) }}…
+                </span>
                 <span v-if="o.items?.length">Items: <b class="text-gray-700">{{ o.items.length }}</b></span>
               </div>
             </div>
