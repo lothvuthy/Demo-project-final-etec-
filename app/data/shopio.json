@@ -270,8 +270,27 @@
       "email": "lothvuthy@gmail.com",
       "password": "123456",
       "id": "RvdMxNb1OI8",
-      "wishlist": [],
-      "cart": [],
+      "wishlist": [
+        "3"
+      ],
+      "cart": [
+        {
+          "id": "3",
+          "name": "Canon EOS Camera",
+          "price": 499.99,
+          "oldPrice": 599.99,
+          "image": "https://i.pinimg.com/736x/91/8a/56/918a5630c23dbd06403f47281d089c92.jpg",
+          "qty": 3
+        },
+        {
+          "id": "1",
+          "name": "Smart Watch Series 8",
+          "price": 199.99,
+          "oldPrice": 249.99,
+          "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg",
+          "qty": 3
+        }
+      ],
       "role": "admin",
       "avatar": ""
     },

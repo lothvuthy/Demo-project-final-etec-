@@ -6,11 +6,13 @@ import { Heart, ShoppingCart, Trash2, Zap } from "lucide-vue-next";
 import { useProducts } from "~/composables/useProducts";
 import { useWishlist } from "~/composables/useWishlist";
 import { useCart } from "~/composables/useCart";
+import { usePayment } from "~/composables/usePayment";
 
 const { wishlistIds, toggle } = useWishlist();
 const { products, loadProducts } = useProducts();
 const { add } = useCart();
 const router = useRouter();
+const { openPayment } = usePayment();
 
 onMounted(() => loadProducts());
 
@@ -39,7 +41,7 @@ const buyNow = async (product) => {
     router.push("/auth/login");
     return;
   }
-  router.push("/checkout");
+   openPayment();
 };
 </script>
 
