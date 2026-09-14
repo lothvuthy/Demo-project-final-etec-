@@ -1,13 +1,13 @@
 <script setup>
 definePageMeta({ middleware: "auth" });
 
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import {
-  Landmark,
   QrCode,
-  ShieldCheck,
   CheckCircle2,
+  XCircle,
   ShoppingBag,
+  Loader2,
 } from "lucide-vue-next";
 import { useCart } from "~/composables/useCart";
 import { useAuth } from "~/composables/useAuth";
@@ -15,29 +15,101 @@ import { useAuth } from "~/composables/useAuth";
 const { items, subtotal, originalSubtotal, discountTotal, clear } = useCart();
 const { user } = useAuth();
 
-const deliveryFee = computed(() => (subtotal.value === 0 || subtotal.value >= 150 ? 0 : 15));
+// URL of the Flask (bakong-api) backend. Change this if you deploy it elsewhere.
+const BAKONG_API_BASE = "http://localhost:5000";
+
+const deliveryFee = computed(() => (subtotal.value === 0 || subtotal.value >= 150 ? 0 : 0.01));
 const total = computed(() => Math.max(0, subtotal.value + deliveryFee.value));
 
-const banks = [
-  { id: "aba", name: "ABA PAY", color: "#1e3a8a" },
-  { id: "acleda", name: "ACLEDA Bank", color: "#0f766e" },
-  { id: "wing", name: "Wing Bank", color: "#dc2626" },
-  { id: "canadia", name: "Canadia Bank", color: "#b91c1c" },
-];
-
-const method = ref("khqr"); // 'khqr' | bank id
 const paying = ref(false);
 const paid = ref(false);
 const orderId = ref(null);
+const selectedLabel = "KHQR (Bakong)";
 
-const selectedLabel = computed(() => {
-  if (method.value === "khqr") return "KHQR (Bakong)";
-  return banks.find((b) => b.id === method.value)?.name ?? "";
+// --- Bakong KHQR state ---
+const qrImage = ref(null); // base64 data URI returned by /api/generate-qr
+const khqrMd5 = ref(null);
+const khqrLoading = ref(false);
+const khqrError = ref(null); // failure while generating / checking the QR
+const orderError = ref(false); // payment succeeded but saving the order failed
+let pollTimer = null;
+let pollFailCount = 0;
+const MAX_POLL_FAILURES = 10; // ~30s of consecutive errors = treat the QR as expired/invalid
+
+const stopPolling = () => {
+  if (pollTimer) {
+    clearInterval(pollTimer);
+    pollTimer = null;
+  }
+};
+
+const startPolling = () => {
+  stopPolling();
+  pollFailCount = 0;
+  pollTimer = setInterval(async () => {
+    if (!khqrMd5.value) return;
+    try {
+      const res = await $fetch(`${BAKONG_API_BASE}/api/check-payment`, {
+        query: { md5: khqrMd5.value },
+      });
+      pollFailCount = 0;
+      if (res.status === "PAID") {
+        stopPolling();
+        await confirmPayment();
+      }
+    } catch (err) {
+      pollFailCount += 1;
+      console.error("check-payment error:", err);
+      if (pollFailCount >= MAX_POLL_FAILURES) {
+        stopPolling();
+        khqrError.value = "This QR code has expired or is no longer valid. Please generate a new one.";
+      }
+    }
+  }, 3000);
+};
+
+const generateKhqr = async () => {
+  if (!items.value.length) return;
+  khqrLoading.value = true;
+  khqrError.value = null;
+  orderError.value = false;
+  qrImage.value = null;
+  khqrMd5.value = null;
+  stopPolling();
+
+  try {
+    const res = await $fetch(`${BAKONG_API_BASE}/api/generate-qr`, {
+      method: "POST",
+      body: {
+        amount: total.value,
+        currency: "USD",
+        description: `Order for ${user.value?.name || "Customer"}`,
+      },
+    });
+    qrImage.value = res.qr_image;
+    khqrMd5.value = res.md5;
+    startPolling();
+  } catch (err) {
+    console.error("generate-qr error:", err);
+    khqrError.value =
+      "Could not reach the payment server. Make sure the Bakong API (app.py) is running on port 5000.";
+  } finally {
+    khqrLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  generateKhqr();
+});
+
+onUnmounted(() => {
+  stopPolling();
 });
 
 const confirmPayment = async () => {
-  if (!items.value.length || paying.value) return;
+  if (!items.value.length || paying.value || paid.value) return;
   paying.value = true;
+  orderError.value = false;
 
   try {
     // Record the order on the same json-server backend used everywhere else
@@ -53,7 +125,8 @@ const confirmPayment = async () => {
         discount: discountTotal.value,
         deliveryFee: deliveryFee.value,
         total: total.value,
-        paymentMethod: selectedLabel.value,
+        paymentMethod: selectedLabel,
+        paymentReference: khqrMd5.value,
         createdAt: new Date().toISOString(),
       },
     });
@@ -62,6 +135,8 @@ const confirmPayment = async () => {
     paid.value = true;
   } catch (err) {
     console.error("Order error:", err);
+    // Money was already confirmed as paid by Bakong - only the order record failed to save.
+    orderError.value = true;
   } finally {
     paying.value = false;
   }
@@ -84,6 +159,24 @@ const confirmPayment = async () => {
       >
         Continue Shopping
       </NuxtLink>
+    </div>
+
+    <!-- Payment succeeded but saving the order failed -->
+    <div v-else-if="orderError" class="flex flex-col items-center text-center py-20">
+      <XCircle :size="56" class="text-red-500 mb-4" />
+      <h1 class="text-2xl font-black text-gray-900">Payment Received, Order Not Saved</h1>
+      <p class="text-gray-500 mt-2 max-w-sm">
+        Your Bakong payment went through, but we couldn't save your order details.
+        <span v-if="khqrMd5">Keep this reference for support: <b class="text-gray-700">{{ khqrMd5 }}</b>.</span>
+      </p>
+      <button
+        type="button"
+        class="mt-6 rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-500 transition disabled:opacity-70"
+        :disabled="paying"
+        @click="confirmPayment"
+      >
+        {{ paying ? "Retrying..." : "Retry Saving Order" }}
+      </button>
     </div>
 
     <!-- Empty cart -->
@@ -117,75 +210,52 @@ const confirmPayment = async () => {
         <!-- Payment methods -->
         <div class="lg:col-span-2 space-y-6">
           <div class="border border-gray-200 rounded-2xl p-6">
-            <h2 class="font-bold text-gray-900 mb-4">Choose a payment method</h2>
+            <h2 class="font-bold text-gray-900 mb-4">Payment method</h2>
 
-            <div class="grid sm:grid-cols-2 gap-3">
-              <button
-                type="button"
-                class="flex items-center gap-3 border rounded-xl p-4 text-left transition"
-                :class="
-                  method === 'khqr'
-                    ? 'border-orange-500 ring-1 ring-orange-500 bg-orange-50'
-                    : 'border-gray-200 hover:border-gray-300'
-                "
-                @click="method = 'khqr'"
-              >
-                <div class="w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center text-white shrink-0">
-                  <QrCode :size="20" />
-                </div>
-                <div>
-                  <p class="font-semibold text-gray-900 text-sm">KHQR (Bakong)</p>
-                  <p class="text-xs text-gray-500">Scan with any bank app</p>
-                </div>
-              </button>
-
-              <button
-                v-for="bank in banks"
-                :key="bank.id"
-                type="button"
-                class="flex items-center gap-3 border rounded-xl p-4 text-left transition"
-                :class="
-                  method === bank.id
-                    ? 'border-orange-500 ring-1 ring-orange-500 bg-orange-50'
-                    : 'border-gray-200 hover:border-gray-300'
-                "
-                @click="method = bank.id"
-              >
-                <div
-                  class="w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0"
-                  :style="{ backgroundColor: bank.color }"
-                >
-                  <Landmark :size="18" />
-                </div>
-                <div>
-                  <p class="font-semibold text-gray-900 text-sm">{{ bank.name }}</p>
-                  <p class="text-xs text-gray-500">Pay from your account</p>
-                </div>
-              </button>
+            <div class="flex items-center gap-3 border border-orange-500 ring-1 ring-orange-500 bg-orange-50 rounded-xl p-4">
+              <div class="w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center text-white shrink-0">
+                <QrCode :size="20" />
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900 text-sm">KHQR (Bakong)</p>
+                <p class="text-xs text-gray-500">Scan with ABA, ACLEDA, Wing, Canadia, or any Bakong-linked bank app</p>
+              </div>
             </div>
 
             <!-- KHQR panel -->
-            <div v-if="method === 'khqr'" class="mt-6 flex flex-col items-center border-t border-gray-100 pt-6">
-              <div class="w-48 h-48 rounded-2xl bg-white border border-gray-200 grid grid-cols-8 grid-rows-8 gap-0.5 p-3">
-                <div
-                  v-for="i in 64"
-                  :key="i"
-                  class="rounded-[1px]"
-                  :class="(i * 7 + Math.floor(i / 8) * 3) % 5 === 0 ? 'bg-gray-900' : 'bg-transparent'"
-                ></div>
+            <div class="mt-6 flex flex-col items-center border-t border-gray-100 pt-6">
+              <!-- Loading -->
+              <div v-if="khqrLoading" class="w-48 h-48 flex items-center justify-center">
+                <Loader2 :size="32" class="animate-spin text-gray-400" />
               </div>
+
+              <!-- Error -->
+              <div v-else-if="khqrError" class="w-48 text-center">
+                <p class="text-sm text-red-500">{{ khqrError }}</p>
+                <button
+                  type="button"
+                  class="mt-3 text-xs font-semibold text-orange-500 hover:underline"
+                  @click="generateKhqr"
+                >
+                  Try again
+                </button>
+              </div>
+
+              <!-- Real KHQR image from the Bakong API -->
+              <img
+                v-else-if="qrImage"
+                :src="qrImage"
+                alt="KHQR code"
+                class="w-48 h-48 rounded-2xl bg-white border border-gray-200 object-contain p-2"
+              />
+
               <p class="text-sm font-semibold text-gray-900 mt-4">
                 Scan to pay ${{ total.toFixed(2) }}
               </p>
-              <p class="text-xs text-gray-400 mt-1">
-                Demo QR for preview only — not linked to a real bank
+              <p v-if="qrImage && !khqrError" class="text-xs text-gray-400 mt-1 flex items-center gap-1.5">
+                <Loader2 :size="12" class="animate-spin" />
+                Waiting for payment confirmation...
               </p>
-            </div>
-
-            <!-- Bank redirect note -->
-            <div v-else class="mt-6 border-t border-gray-100 pt-6 flex items-center gap-3 text-sm text-gray-500">
-              <ShieldCheck :size="18" class="text-orange-500 shrink-0" />
-              You'll be asked to confirm this payment in your {{ selectedLabel }} app (simulated in this demo).
             </div>
           </div>
 
@@ -231,14 +301,9 @@ const confirmPayment = async () => {
             <span class="text-base font-bold text-gray-900">Total</span>
             <span class="text-2xl font-black text-gray-900">${{ total.toFixed(2) }}</span>
           </div>
-          <button
-            type="button"
-            class="w-full bg-gray-900 text-white font-semibold py-3.5 rounded-full hover:bg-orange-500 transition disabled:opacity-70"
-            :disabled="paying"
-            @click="confirmPayment"
-          >
-            {{ paying ? "Processing..." : `Pay ${selectedLabel}` }}
-          </button>
+          <p class="text-center text-xs text-gray-500">
+            Scan the QR code with any Bakong-linked bank app to complete payment automatically.
+          </p>
         </div>
       </div>
     </div>

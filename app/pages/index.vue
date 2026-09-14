@@ -35,7 +35,7 @@ const nextSlide = () => {
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length;
 };
-const goToSlide = (index) => {
+const goToSlide = (index:number) => {
   currentSlide.value = index;
 };
 
@@ -60,7 +60,7 @@ onMounted(async () => {
   interval = setInterval(nextSlide, 5000);
 });
 onUnmounted(() => {
-  clearInterval(interval);
+  let interval: ReturnType<typeof setInterval>;
   revealObserver.value?.disconnect();
   if (import.meta.client) document.body.classList.remove("reveal-enabled");
 });
@@ -71,7 +71,7 @@ onUnmounted(() => {
   <div class="min-h-screen bg-white">
     <section class=" px-4 md:px-8 py-6">
       <div
-        class="relative max-w-7xl w-full  mx-auto  h-[600px] md:h-[640px] overflow-hidden rounded-3xl"
+        class="relative max-w-7xl w-full  mx-auto  h-600px md:h-640px overflow-hidden rounded-3xl"
       >
         <div
           v-for="(slide, index) in slides"
@@ -210,7 +210,7 @@ onUnmounted(() => {
             />
             <button
               class="absolute top-3 right-3 w-8 h-8">
-              <Heart size="20" />
+              <Heart :size="20" />
             </button>
           </div>
         </div>
@@ -227,7 +227,7 @@ onUnmounted(() => {
             class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center"
           >
             <component
-              :is="icons[feature.icon]"
+              :is="icons[feature.icon as keyof typeof icons]"
               :size="24"
               class="text-white"
             />
