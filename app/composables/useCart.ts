@@ -46,7 +46,20 @@ export const useCart = () => {
     const idx = current.findIndex((i) => i.id === idStr)
 
     if (idx > -1) {
-      current[idx] = { ...current[idx], qty: current[idx].qty + qty }
+      const existing = current[idx]
+
+      if (!existing) {
+        current.push({
+          id: idStr,
+          name: product.name,
+          price: product.price,
+          oldPrice: product.oldPrice,
+          image: product.image,
+          qty
+        })
+      } else {
+        current[idx] = { ...existing, qty: existing.qty + qty }
+      }
     } else {
       current.push({
         id: idStr,
@@ -77,6 +90,5 @@ export const useCart = () => {
   const clear = async () => {
     await updateUser({ cart: [] })
   }
-
   return { items, count, subtotal, originalSubtotal, discountTotal, add, remove, updateQty, clear }
 }

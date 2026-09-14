@@ -16,7 +16,6 @@ export interface AuthUser {
 
 const STORAGE_KEY = 'eshop_user'
 const API_USERS_URL = 'http://localhost:8000/users'
-
 /**
  * Shared, reactive auth state. `useState` makes this a singleton across the
  * whole app, so the Navbar, product cards, wishlist page, etc. all update
@@ -24,7 +23,6 @@ const API_USERS_URL = 'http://localhost:8000/users'
  */
 export const useAuth = () => {
   const user = useState<AuthUser | null>('auth-user', () => null)
-
   // Called once on app startup (see app/plugins/auth.client.ts) to restore
   // the session from localStorage.
   const loadFromStorage = () => {

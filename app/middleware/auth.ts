@@ -6,7 +6,6 @@ export default defineNuxtRouteMiddleware(() => {
   }
 
   const user = localStorage.getItem('eshop_user')
-
   // User is not logged in
   if (!user) {
     return navigateTo('/auth/login')

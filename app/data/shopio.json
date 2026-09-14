@@ -48,48 +48,85 @@
       "description": "Dedicated support"
     }
   ],
+  "polaproducts": [
+    {
+      "id": "1",
+      "name": "Smart Watch Series 8",
+      "category": "Watches",
+      "price": 199.99,
+      "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Wireless Headphones",
+      "category": "Electronics",
+      "price": 59.99,
+      "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Canon EOS Camera",
+      "category": "Electronics",
+      "price": 499.99,
+      "image": "https://i.pinimg.com/736x/91/8a/56/918a5630c23dbd06403f47281d089c92.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Nike Air Force 1",
+      "category": "Shoes",
+      "price": 89.99,
+      "image": "https://i.pinimg.com/736x/0f/5f/ef/0f5fef5eeb0f73ec63290a698b4bf980.jpg"
+    }
+  ],
   "categories": [
     {
       "id": "1",
       "name": "Electronics",
-      "items": 120,
-      "image": "https://i.pinimg.com/1200x/36/d1/f7/36d1f7838eeb16e7d4c940adf5cf0838.jpg"
+      "value": "Electronics",
+      "items": 8,
+      "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg"
     },
     {
       "id": "2",
       "name": "Fashion",
-      "items": 150,
-      "image": "https://i.pinimg.com/736x/09/4e/23/094e23322b100577fb9a48365a3c1578.jpg"
+      "value": "Fashion",
+      "items": 4,
+      "image": "https://i.pinimg.com/736x/a8/12/66/a812664b3e3e2e084365beb1639000f7.jpg"
     },
     {
       "id": "3",
       "name": "Shoes",
-      "items": 80,
-      "image": "https://i.pinimg.com/1200x/c1/47/d7/c147d75d161d89ee196b1e3622fecb8c.jpg"
+      "value": "Shoes",
+      "items": 2,
+      "image": "https://i.pinimg.com/736x/0f/5f/ef/0f5fef5eeb0f73ec63290a698b4bf980.jpg"
     },
     {
       "id": "4",
       "name": "Bags",
-      "items": 60,
-      "image": "https://i.pinimg.com/736x/0f/34/48/0f34483b4a0e72a2d0df3d207a070eff.jpg"
+      "value": "Bags",
+      "items": 2,
+      "image": "https://i.pinimg.com/736x/49/3d/92/493d921b68ba3ad712927814ca8ae39b.jpg"
     },
     {
       "id": "5",
       "name": "Watches",
-      "items": 40,
-      "image": "https://i.pinimg.com/736x/c8/d8/25/c8d825da985d3cc18c92160bb40a5cd3.jpg"
+      "value": "Watches",
+      "items": 2,
+      "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg"
     },
     {
       "id": "6",
       "name": "Accessories",
-      "items": 70,
-      "image": "https://i.pinimg.com/736x/1a/83/c8/1a83c8eab1ef20410ad25ca5d394df03.jpg"
+      "value": "Accessories",
+      "items": 1,
+      "image": "https://i.pinimg.com/1200x/18/e7/77/18e7779831f1bb3e812f000ba954d572.jpg"
     }
   ],
   "products": [
     {
       "id": "1",
       "name": "Smart Watch Series 8",
+      "category": "Watches",
       "price": 199.99,
       "oldPrice": 249.99,
       "discount": 20,
@@ -100,6 +137,7 @@
     {
       "id": "2",
       "name": "Wireless Headphones",
+      "category": "Electronics",
       "price": 59.99,
       "oldPrice": 89.99,
       "discount": 33,
@@ -110,6 +148,7 @@
     {
       "id": "3",
       "name": "Canon EOS Camera",
+      "category": "Electronics",
       "price": 499.99,
       "oldPrice": 599.99,
       "discount": 17,
@@ -120,6 +159,7 @@
     {
       "id": "4",
       "name": "Nike Air Force 1",
+      "category": "Shoes",
       "price": 89.99,
       "oldPrice": 119.99,
       "discount": 25,
@@ -130,6 +170,7 @@
     {
       "id": "5",
       "name": "iPhone 15 Pro",
+      "category": "Electronics",
       "price": 899.99,
       "oldPrice": 999.99,
       "discount": 10,
@@ -140,6 +181,7 @@
     {
       "id": "6",
       "name": "MacBook Air M2",
+      "category": "Electronics",
       "price": 999.99,
       "oldPrice": 1199.99,
       "discount": 17,
@@ -150,6 +192,7 @@
     {
       "id": "7",
       "name": "Sony Wireless Speaker",
+      "category": "Electronics",
       "price": 79.99,
       "oldPrice": 109.99,
       "discount": 27,
@@ -160,6 +203,7 @@
     {
       "id": "8",
       "name": "Adidas Ultraboost Shoes",
+      "category": "Shoes",
       "price": 109.99,
       "oldPrice": 149.99,
       "discount": 27,
@@ -170,6 +214,7 @@
     {
       "id": "9",
       "name": "Samsung Galaxy Buds",
+      "category": "Electronics",
       "price": 69.99,
       "oldPrice": 99.99,
       "discount": 30,
@@ -180,6 +225,7 @@
     {
       "id": "10",
       "name": "Gaming Mechanical Keyboard",
+      "category": "Electronics",
       "price": 74.99,
       "oldPrice": 99.99,
       "discount": 25,
@@ -190,6 +236,7 @@
     {
       "id": "11",
       "name": "PlayStation 5 Controller",
+      "category": "Electronics",
       "price": 59.99,
       "oldPrice": 74.99,
       "discount": 20,
@@ -200,12 +247,101 @@
     {
       "id": "12",
       "name": "Minimalist Backpack",
+      "category": "Bags",
       "price": 44.99,
       "oldPrice": 64.99,
       "discount": 31,
       "rating": 4.6,
       "reviews": 71,
       "image": "https://i.pinimg.com/1200x/47/95/9d/47959dac3a5e9b6b8811d6c29557bd6a.jpg"
+    },
+    {
+      "id": "13",
+      "name": "GAGU",
+      "category": "Fashion",
+      "price": 40,
+      "oldPrice": 50,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/736x/a8/12/66/a812664b3e3e2e084365beb1639000f7.jpg"
+    },
+    {
+      "id": "14",
+      "name": "CCW",
+      "category": "Fashion",
+      "price": 40,
+      "oldPrice": 50,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/1200x/bc/36/99/bc369956893c3038dc82a44e67b35a5c.jpg"
+    },
+    {
+      "id": "15",
+      "name": "THE",
+      "category": "Fashion",
+      "price": 40,
+      "oldPrice": 50,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/1200x/18/e8/53/18e853775ed9ebd066d9f6ba8a4e6594.jpg"
+    },
+    {
+      "id": "16",
+      "name": "JUBE",
+      "category": "Fashion",
+      "price": 40,
+      "oldPrice": 50,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/1200x/85/58/e2/8558e233f63c4614ffc33391ebe689da.jpg"
+    },
+    {
+      "id": "17",
+      "name": " Watch ",
+      "category": "Watches",
+      "price": 199.99,
+      "oldPrice": 249.99,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/1200x/a7/04/79/a704797d8e544eee7056df774624b921.jpg"
+    },
+    {
+      "id": "18",
+      "name": " Smart Watch ",
+      "category": "Watches",
+      "price": 199.99,
+      "oldPrice": 249.99,
+      "discount": 20,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/736x/fa/e3/09/fae309bc49c9f2289d941a14147cd51c.jpg"
+    },
+    {
+      "id": "19",
+      "name": "FREE GIFT",
+      "category": "Accessories",
+      "price": 0,
+      "oldPrice": 5,
+      "discount": 100,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/1200x/18/e7/77/18e7779831f1bb3e812f000ba954d572.jpg"
+    },
+    {
+      "id": "20",
+      "name": "bags anime",
+      "category": "Bags",
+      "price": 20,
+      "oldPrice": 25,
+      "discount": 5,
+      "rating": 4.8,
+      "reviews": 120,
+      "image": "https://i.pinimg.com/736x/49/3d/92/493d921b68ba3ad712927814ca8ae39b.jpg"
     }
   ],
   "arrivals": [
@@ -288,17 +424,100 @@
     },
     {
       "id": "admin-3",
-      "name": "Kelu Dom",
+      "name": "Kel UDom",
       "email": "keludom17@gmail.com",
       "password": "123456",
       "address": "",
       "wishlist": [],
-      "cart": [],
+      "cart": [
+        {
+          "id": "1",
+          "name": "Smart Watch Series 8",
+          "price": 199.99,
+          "oldPrice": 249.99,
+          "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg",
+          "qty": 1
+        },
+        {
+          "id": "2",
+          "name": "Wireless Headphones",
+          "price": 59.99,
+          "oldPrice": 89.99,
+          "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg",
+          "qty": 1
+        }
+      ],
       "role": "admin",
       "avatar": ""
+    },
+    {
+      "name": "GU",
+      "email": "keludom27@gmail.com",
+      "password": "asdfgh",
+      "wishlist": [],
+      "cart": [],
+      "role": "user",
+      "id": "WoIMwFfeffM"
+    },
+    {
+      "name": "gu",
+      "email": "reukcambo@gmail.com",
+      "password": "123456",
+      "wishlist": [],
+      "cart": [],
+      "role": "user",
+      "id": "r7_nVm3x7Hg"
     }
   ],
   "messages": [],
-  "orders": [],
+  "orders": [
+    {
+      "userId": "r7_nVm3x7Hg",
+      "userName": "gu",
+      "userEmail": "reukcambo@gmail.com",
+      "userAddress": "",
+      "items": [
+        {
+          "id": "13",
+          "name": "GAGU",
+          "price": 40,
+          "oldPrice": 50,
+          "image": "https://i.pinimg.com/736x/a8/12/66/a812664b3e3e2e084365beb1639000f7.jpg",
+          "qty": 2
+        },
+        {
+          "id": "15",
+          "name": "THE",
+          "price": 40,
+          "oldPrice": 50,
+          "image": "https://i.pinimg.com/1200x/18/e8/53/18e853775ed9ebd066d9f6ba8a4e6594.jpg",
+          "qty": 1
+        },
+        {
+          "id": "16",
+          "name": "JUBE",
+          "price": 40,
+          "oldPrice": 50,
+          "image": "https://i.pinimg.com/1200x/85/58/e2/8558e233f63c4614ffc33391ebe689da.jpg",
+          "qty": 1
+        },
+        {
+          "id": "20",
+          "name": "bags anime",
+          "price": 20,
+          "oldPrice": 25,
+          "image": "https://i.pinimg.com/736x/49/3d/92/493d921b68ba3ad712927814ca8ae39b.jpg",
+          "qty": 1
+        }
+      ],
+      "subtotal": 180,
+      "discount": 45,
+      "deliveryFee": 0,
+      "total": 180,
+      "paymentMethod": "Wing Bank",
+      "createdAt": "2026-09-10T03:24:42.678Z",
+      "id": "ANhP_pLNc1U"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
