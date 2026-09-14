@@ -4,9 +4,10 @@ definePageMeta({ middleware: "auth" });
 import { ref, computed } from "vue";
 import { Trash2, Minus, Plus, ArrowRight, Tag, ShoppingBag } from "lucide-vue-next";
 import { useCart } from "~/composables/useCart";
+import { usePayment } from "~/composables/usePayment";
 
 const { items, subtotal, originalSubtotal, discountTotal, remove, updateQty } = useCart();
-const router = useRouter();
+const { openPayment } = usePayment();
 
 // Simple flat delivery fee, free above $150 — presentation only, not a
 // real shipping calculation.
@@ -35,7 +36,7 @@ const total = computed(() =>
 );
 
 const goToCheckout = () => {
-  router.push("/checkout");
+  openPayment();
 };
 </script>
 
