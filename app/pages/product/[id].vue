@@ -6,6 +6,7 @@ import { useProducts } from "~/composables/useProducts";
 import ProductCard from "~/components/users/product/ProductCard.vue";
 import { useCart } from "~/composables/useCart";
 import { useWishlist } from "~/composables/useWishlist";
+import { usePayment } from "~/composables/usePayment";
 
 const route = useRoute();
 const { products, loadProducts } = useProducts();
@@ -30,6 +31,7 @@ const decrement = () => {
 
 const { add } = useCart();
 const { isWishlisted, toggle } = useWishlist();
+const { openPayment } = usePayment();
 
 const liked = computed(() =>
   product.value ? isWishlisted(product.value.id) : false
@@ -63,7 +65,7 @@ const handleBuyNow = async () => {
     router.push("/auth/login");
     return;
   }
-  router.push("/checkout");
+  openPayment();
 };
 
 const handleToggleWishlist = async () => {

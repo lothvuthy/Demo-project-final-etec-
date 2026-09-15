@@ -45,9 +45,10 @@ export const useCart = () => {
     const current = [...items.value]
     const idx = current.findIndex((i) => i.id === idStr)
 
-    if (idx > -1) {
-      current[idx] = { ...current[idx], qty: current[idx].qty + qty }
-    } else {
+    const line = current[idx];
+if (line) {
+  current[idx] = { ...line, qty: line.qty + qty };
+}else {
       current.push({
         id: idStr,
         name: product.name,

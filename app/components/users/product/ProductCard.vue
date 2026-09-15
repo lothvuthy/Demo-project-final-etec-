@@ -2,10 +2,12 @@
 import { Heart, Star, StarHalf, Zap, ShoppingCart } from "lucide-vue-next";
 import { useWishlist } from "~/composables/useWishlist";
 import { useCart } from "~/composables/useCart";
+import { usePayment } from "~/composables/usePayment";
 
 const props = defineProps({ product: { type: Object, required: true } });
 const { isWishlisted, toggle } = useWishlist();
 const { add } = useCart();
+const { openPayment } = usePayment();
 const router = useRouter();
 const liked = computed(() => isWishlisted(props.product.id));
 const adding = ref(false);
@@ -32,7 +34,7 @@ const handleBuyNow = async () => {
   const ok = await add(props.product, 1);
   buying.value = false;
   if (!ok) { router.push("/auth/login"); return; }
-  router.push("/checkout");
+ openPayment();
 };
 </script>
 
