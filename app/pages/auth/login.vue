@@ -51,7 +51,6 @@
 
         <div class="text-center text-sm space-y-2 mt-5">
           <p>Don't have an account? <NuxtLink to="/auth/register" class="text-orange-500 font-semibold hover:underline">Sign up</NuxtLink></p>
-          <p><NuxtLink to="/auth/forgot-password" class="text-sky-600 hover:underline">Forgot Password?</NuxtLink></p>
         </div>
       </form>
     </div>
@@ -76,10 +75,10 @@ const message = ref({
 })
 
 const handleLogin = async () => {
-  // Validate fields
+ 
   if (!form.value.email.trim() || !form.value.password.trim()) {
     message.value = {
-      text: '⚠️ Please fill in all fields.',
+      text: ' Please fill in all fields.',
       type: 'error'
     }
     return
@@ -92,19 +91,19 @@ const handleLogin = async () => {
   }
 
   try {
-    // Get all users from JSON Server
+  
     const users = await $fetch(API_USERS_URL, {
       method: 'GET'
     })
 
-    // Find matching user
+  
     const user = users.find(
       (user) =>
         user.email.toLowerCase() === form.value.email.trim().toLowerCase() &&
         user.password === form.value.password.trim()
     )
 
-    // No matching user
+  
     if (!user) {
       message.value = {
         text: '❌ Invalid email or password.',
@@ -113,17 +112,17 @@ const handleLogin = async () => {
       return
     }
 
-    // Login successful
+  
     message.value = {
       text: '✅ Login successful! Redirecting...',
       type: 'success'
     }
 
-    // Save logged-in user (updates localStorage + reactive app state)
+
     const { setUser } = useAuth()
     setUser(user)
 
-    // Redirect to home
+  
     setTimeout(() => {
       navigateTo(user.role === 'admin' ? '/admin' : '/')
     }, 700)

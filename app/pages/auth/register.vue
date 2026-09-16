@@ -4,7 +4,7 @@
 
       <h1 class="text-lg sm:text-xl font-bold text-gray-800 text-center mb-5 sm:mb-7">Create Your Account</h1>
 
-      <!-- Register Form -->
+    
       <form @submit.prevent="handleRegister" class="space-y-4">
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
@@ -62,7 +62,7 @@
           {{ loading ? "Creating Account..." : "Sign Up" }}
         </button>
 
-        <!-- Message Display -->
+      
         <p
           v-if="message.text"
           :class="[
@@ -73,7 +73,7 @@
           {{ message.text }}
         </p>
 
-        <!-- Link to Login -->
+    
         <div class="text-center text-sm mt-5">
           <p>Already have an account? <NuxtLink to="/auth/login" class="text-orange-500 font-semibold hover:underline">Sign in</NuxtLink></p>
         </div>
@@ -84,13 +84,12 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useAuth } from '~/composables/useAuth'
 
-// ==============================================
-// 🔌 API CONFIGURATION — UPDATE THIS LATER!
-// ==============================================
+
 const API_REGISTER_URL = 'http://localhost:8000/users'
-// Example full URL: 'http://localhost:5000/api/auth/register'
-// ==============================================
+
+
 
 const form = ref({
   name: '',
@@ -102,21 +101,21 @@ const form = ref({
 const loading = ref(false)
 const message = ref({ text: '', type: '' })
 
-// ========== Register Handler ==========
+
 const handleRegister = async () => {
-  // 1. Basic validation
+ 
   if (!form.value.name.trim() || !form.value.email.trim() || !form.value.password.trim()) {
     message.value = { text: '⚠️ Please fill in all fields.', type: 'error' }
     return
   }
 
   if (form.value.password.length < 6) {
-    message.value = { text: '⚠️ Password must be at least 6 characters.', type: 'error' }
+    message.value = { text: ' Password must be at least 6 characters.', type: 'error' }
     return
   }
 
   if (form.value.password !== form.value.confirmPassword) {
-    message.value = { text: '⚠️ Passwords do not match.', type: 'error' }
+    message.value = { text: ' Passwords do not match.', type: 'error' }
     return
   }
 
@@ -124,7 +123,7 @@ const handleRegister = async () => {
   message.value = { text: '', type: '' }
 
   try {
-    // 2. 📡 API CALL — Ready to connect to backend!
+  
     const result = await $fetch(API_REGISTER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -138,22 +137,19 @@ const handleRegister = async () => {
       }
     })
 
-    // ✅ Success
-    message.value = { text: '✅ Account created successfully! Redirecting...', type: 'success' }
+   
+    message.value = { text: ' Account created successfully! Redirecting...', type: 'success' }
 
-    // Save token if backend returns one
-    if (result.token) {
-      localStorage.setItem('eshop_token', result.token)
-      localStorage.setItem('eshop_user', JSON.stringify(result.user || {}))
-    }
+  
+   const { setUser } = useAuth()
+setUser(result)
 
-    // Redirect to login page after delay
-    setTimeout(() => {
-      navigateTo('/auth/login')
-    }, 1500)
+setTimeout(() => {
+  navigateTo('/')
+}, 700)
 
   } catch (err) {
-    // ❌ Handle errors
+  
     const errorMsg = err.data?.message || err.message || 'Registration failed. Please try again.'
     message.value = { text: `❌ ${errorMsg}`, type: 'error' }
     console.error('Register Error:', err)

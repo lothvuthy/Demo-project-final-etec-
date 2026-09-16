@@ -28,7 +28,7 @@
           {{ loading ? "Sending..." : "Send Reset Link" }}
         </button>
 
-        <!-- Message Display -->
+  
         <p
           v-if="message.text"
           :class="[
@@ -39,7 +39,7 @@
           {{ message.text }}
         </p>
 
-        <!-- Link Back to Login -->
+
         <div class="text-center text-sm mt-5">
           <p><NuxtLink to="/auth/login" class="text-sky-600 hover:underline">← Back to Sign In</NuxtLink></p>
         </div>
@@ -51,12 +51,10 @@
 <script setup>
 import { ref } from 'vue'
 
-// ==============================================
-// 🔌 API CONFIGURATION — UPDATE THIS LATER!
-// ==============================================
+
 const API_FORGOT_URL = '/api/auth/forgot-password'
 // Example full URL: 'http://localhost:5000/api/auth/forgot-password'
-// ==============================================
+
 
 const form = ref({
   email: ''
@@ -65,11 +63,11 @@ const form = ref({
 const loading = ref(false)
 const message = ref({ text: '', type: '' })
 
-// ========== Submit Handler ==========
+
 const handleSubmit = async () => {
-  // Basic validation
+
   if (!form.value.email.trim()) {
-    message.value = { text: '⚠️ Please enter your email address.', type: 'error' }
+    message.value = { text: ' Please enter your email address.', type: 'error' }
     return
   }
 
@@ -77,21 +75,21 @@ const handleSubmit = async () => {
   message.value = { text: '', type: '' }
 
   try {
-    // 📡 API CALL — Ready to connect to backend!
+
     const result = await $fetch(API_FORGOT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: { email: form.value.email.trim() }
     })
 
-    //  Success
+   
     message.value = {
       text: result.message || ' Reset link sent! Please check your email.',
       type: 'success'
     }
 
   } catch (err) {
-    // ❌ Handle errors
+
     const errorMsg = err.data?.message || err.message || '❌ Failed to send reset link. Try again later.'
     message.value = { text: errorMsg, type: 'error' }
     console.error('Forgot Password Error:', err)
