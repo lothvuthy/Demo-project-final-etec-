@@ -206,6 +206,16 @@
       "rating": 4.6,
       "reviews": 71,
       "image": "https://i.pinimg.com/1200x/47/95/9d/47959dac3a5e9b6b8811d6c29557bd6a.jpg"
+    },
+    {
+      "name": "Minibage",
+      "price": 20,
+      "oldPrice": 40,
+      "discount": 50,
+      "rating": 5,
+      "reviews": 0,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkjOUSWpSL91uyHd-ZEX8oDo6UEFKYsH_bMRPo1EnY0w&s",
+      "id": "v9zBu4cfv-Y"
     }
   ],
   "arrivals": [
@@ -275,20 +285,12 @@
       ],
       "cart": [
         {
-          "id": "3",
-          "name": "Canon EOS Camera",
-          "price": 499.99,
-          "oldPrice": 599.99,
-          "image": "https://i.pinimg.com/736x/91/8a/56/918a5630c23dbd06403f47281d089c92.jpg",
-          "qty": 3
-        },
-        {
           "id": "1",
           "name": "Smart Watch Series 8",
           "price": 199.99,
           "oldPrice": 249.99,
           "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg",
-          "qty": 3
+          "qty": 1
         }
       ],
       "role": "admin",
@@ -368,6 +370,5 @@
       "createdAt": "2026-09-10T02:30:09.867Z",
       "id": "voM9qFHvd78"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
