@@ -1,5 +1,5 @@
 <script setup>
-import { Heart, Star, StarHalf, Zap, ShoppingCart } from "lucide-vue-next";
+import { Heart, Star, Zap, ShoppingCart, Check } from "lucide-vue-next";
 import { useWishlist } from "~/composables/useWishlist";
 import { useCart } from "~/composables/useCart";
 import { usePayment } from "~/composables/usePayment";
@@ -12,7 +12,7 @@ const router = useRouter();
 const liked = computed(() => isWishlisted(props.product.id));
 const adding = ref(false);
 const buying = ref(false);
-const notice = ref('');
+const notice = ref("");
 
 const handleHeartClick = async () => {
   const ok = await toggle(props.product);
@@ -21,60 +21,108 @@ const handleHeartClick = async () => {
 
 const addToCart = async () => {
   adding.value = true;
-  notice.value = '';
+  notice.value = "";
   const ok = await add(props.product, 1);
   adding.value = false;
-  if (!ok) { router.push("/auth/login"); return; }
-  notice.value = 'Added to cart';
-  setTimeout(() => (notice.value = ''), 1500);
+  if (!ok) {
+    router.push("/auth/login");
+    return;
+  }
+  notice.value = "Added to cart";
+  setTimeout(() => (notice.value = ""), 1500);
 };
 
 const handleBuyNow = async () => {
   buying.value = true;
   const ok = await add(props.product, 1);
   buying.value = false;
-  if (!ok) { router.push("/auth/login"); return; }
- openPayment();
+  if (!ok) {
+    router.push("/auth/login");
+    return;
+  }
+  openPayment();
 };
 </script>
 
 <template>
-  <div class="group">
+  <article class="group flex h-full flex-col">
     <NuxtLink :to="`/product/${product.id}`" class="block">
-      <div class="relative bg-gray-50 rounded-2xl overflow-hidden">
-        <img :src="product.image" :alt="product.name" class="w-full h-44 sm:h-56 lg:h-64 object-cover group-hover:scale-105 transition duration-300" />
-        <button type="button" class="absolute top-3 right-3 w-9 h-9 bg-white rounded-full shadow-sm flex items-center justify-center transition" :class="liked ? 'text-orange-500' : 'text-gray-500 hover:text-orange-500'" :aria-label="liked ? 'Remove from wishlist' : 'Add to wishlist'" @click.stop.prevent="handleHeartClick">
-          <Heart :size="20" :fill="liked ? 'currentColor' : 'none'" />
+      <div class="relative aspect-4/5 overflow-hidden rounded-2xl bg-mist">
+        <img
+          :src="product.image"
+          :alt="product.name"
+          loading="lazy"
+          class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+
+        <span
+          v-if="product.discount"
+          class="absolute left-3 top-3 rounded-full bg-orange-600 px-2.5 py-1 text-xs font-bold text-white"
+        >
+          -{{ product.discount }}%
+        </span>
+
+        <button
+          type="button"
+          class="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/95 shadow-sm transition hover:scale-105"
+          :class="liked ? 'text-orange-600' : 'text-gray-500 hover:text-orange-600'"
+          :aria-label="liked ? 'Remove from wishlist' : 'Add to wishlist'"
+          :aria-pressed="liked"
+          @click.stop.prevent="handleHeartClick"
+        >
+          <Heart :size="18" :fill="liked ? 'currentColor' : 'none'" />
         </button>
-        <span v-if="product.discount" class="absolute bottom-3 left-3 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">-{{ product.discount }}%</span>
       </div>
-      <div class="pt-4">
-        <div class="flex items-center gap-1 text-yellow-500 text-sm">
-          <Star :size="14" fill="currentColor" /><Star :size="14" fill="currentColor" /><Star :size="14" fill="currentColor" /><StarHalf :size="14" fill="currentColor" />
-          <span class="ml-1 text-gray-700">{{ product.rating }}</span><span class="text-gray-400"> ({{ product.reviews }}) </span>
+
+      <div class="pt-3.5">
+        <h3
+          class="line-clamp-2 font-display text-base font-semibold leading-snug text-ink transition group-hover:text-orange-600"
+        >
+          {{ product.name }}
+        </h3>
+
+        <div class="mt-1 flex items-center gap-1 text-sm text-gray-500">
+          <Star :size="14" fill="currentColor" class="text-amber-400" />
+          <span class="font-semibold text-gray-800">{{ product.rating }}</span>
+          <span>({{ product.reviews }})</span>
         </div>
-        <h3 class="font-semibold mt-2 group-hover:text-orange-500 transition">{{ product.name }}</h3>
-        <div class="flex items-center gap-2 mt-2">
-          <span class="font-bold text-lg text-gray-900">${{ product.price }}</span>
-          <span v-if="product.oldPrice" class="text-gray-400 text-sm line-through">${{ product.oldPrice }}</span>
+
+        <div class="mt-2 flex items-baseline gap-2">
+          <span class="text-lg font-bold text-ink">${{ product.price }}</span>
+          <span v-if="product.oldPrice" class="text-sm text-gray-400 line-through">
+            ${{ product.oldPrice }}
+          </span>
         </div>
       </div>
     </NuxtLink>
 
-    <div class="mt-3 grid grid-cols-2 gap-1.5 sm:gap-2">
-      <button type="button" class="min-w-0 inline-flex items-center justify-center gap-1 bg-orange-500 text-white text-[11px] sm:text-sm font-semibold px-1.5 sm:px-2 py-2 sm:py-2.5 rounded-full hover:bg-orange-600 transition disabled:opacity-70" :disabled="adding" @click.stop.prevent="addToCart">
-        <ShoppingCart :size="14" class="shrink-0 sm:hidden" />
-        <ShoppingCart :size="15" class="hidden sm:block shrink-0" />
-        <span class="truncate sm:hidden">{{ adding ? "Adding..." : "Add" }}</span>
-        <span class="hidden truncate sm:block">{{ adding ? "Adding..." : "Add to Cart" }}</span>
-      </button>
-      <button type="button" class="min-w-0 inline-flex items-center justify-center gap-1 bg-gray-900 text-white text-[11px] sm:text-sm font-semibold px-1.5 sm:px-2 py-2 sm:py-2.5 rounded-full hover:bg-orange-500 transition disabled:opacity-70" :disabled="buying" @click.stop.prevent="handleBuyNow">
-        <Zap :size="14" class="shrink-0 sm:hidden" />
-        <Zap :size="15" class="hidden sm:block shrink-0" />
-        <span class="truncate sm:hidden">{{ buying ? "Adding..." : "Buy" }}</span>
-        <span class="hidden truncate sm:block">{{ buying ? "Adding..." : "Buy Now" }}</span>
-      </button>
+    <div class="mt-auto pt-3.5">
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full bg-ink px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:opacity-60"
+          :disabled="adding"
+          @click.stop.prevent="addToCart"
+        >
+          <Check v-if="notice" :size="16" class="shrink-0" />
+          <ShoppingCart v-else :size="16" class="shrink-0" />
+          <span class="truncate">
+            {{ adding ? "Adding..." : notice ? "Added" : "Add to cart" }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-line px-3.5 py-2.5 text-sm font-semibold text-ink transition hover:border-orange-500 hover:text-orange-600 disabled:opacity-60"
+          :disabled="buying"
+          :aria-label="`Buy ${product.name} now`"
+          @click.stop.prevent="handleBuyNow"
+        >
+          <Zap :size="16" class="shrink-0" />
+          <span class="hidden sm:inline">{{ buying ? "..." : "Buy" }}</span>
+        </button>
+      </div>
+      <p class="sr-only" role="status" aria-live="polite">{{ notice }}</p>
     </div>
-    <p v-if="notice" class="mt-2 text-center text-xs font-medium text-green-600">{{ notice }}</p>
-  </div>
+  </article>
 </template>

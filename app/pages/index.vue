@@ -4,8 +4,7 @@ import {
   RotateCcw,
   CreditCard,
   Headphones,
-  MoveRight,
-  Heart,
+  ArrowRight,
 } from "lucide-vue-next";
 
 import { ref, computed, onMounted, onUnmounted } from "vue";
@@ -20,7 +19,7 @@ const icons = {
   Headphones,
 };
 
-const currentSlide = ref(0);
+const SLIDE_MS = 5000;
 
 const slides = shopio.slides;
 const features = shopio.features;
@@ -29,279 +28,272 @@ const products = shopio.products;
 const arrivals = shopio.arrivals;
 const displayedProducts = computed(() => products.slice(0, 4));
 
-let interval: ReturnType<typeof setInterval>;
+const currentSlide = ref(0);
+let timer: ReturnType<typeof setInterval> | undefined;
 
-const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % slides.length;
+// "TRENDING NOW" -> "Trending now"
+const sentence = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+const startTimer = () => {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % slides.length;
+  }, SLIDE_MS);
 };
 
-const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length;
-};
-
+// Restarting the timer on every manual pick keeps the progress bar in sync.
 const goToSlide = (index: number) => {
   currentSlide.value = index;
+  startTimer();
 };
 
-let observer: IntersectionObserver | null = null;
-
-onMounted(() => {
-  interval = setInterval(nextSlide, 5000);
-
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("reveal-show");
-          observer?.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: "0px 0px -50px 0px",
-    },
-  );
-
-  const elements = document.querySelectorAll(".scroll-reveal");
-
-  elements.forEach((element) => {
-    observer?.observe(element);
-  });
-});
-
-onUnmounted(() => {
-  clearInterval(interval);
-  observer?.disconnect();
-});
+onMounted(startTimer);
+onUnmounted(() => clearInterval(timer));
 </script>
 
 <template>
   <div class="min-h-screen bg-white">
-    <section class="px-4 md:px-8 py-6">
+    <!-- Hero -->
+    <section class="px-4 pt-5 md:px-8">
       <div
-        class="relative w-full max-w-300 mx-auto h-140 md:h-160 overflow-hidden rounded-3xl"
+        class="mx-auto grid max-w-7xl overflow-hidden rounded-4xl bg-ink text-white lg:grid-cols-[1fr_1.05fr]"
       >
-        <div
-          v-for="(slide, index) in slides"
-          :key="slide.id"
-          class="absolute inset-0 transition-opacity duration-700"
-          :class="index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'"
-        >
-          <img
-            :src="slide.image"
-            :alt="slide.title"
-            class="absolute inset-0 w-full h-full object-cover"
-          />
-
-          <div class="absolute inset-0 z-10 flex items-center">
-            <div class="px-8 md:px-16 max-w-150 text-white">
-              <h1 class="text-2xl font-bold">
-                {{ slide.title }}
-              </h1>
-
-              <h2 class="text-5xl md:text-7xl font-bold leading-tight">
-                {{ slide.highlight }}
-              </h2>
-
-              <p class="mt-6 text-base md:text-2xl leading-8 max-w-100">
-                {{ slide.description }}
-              </p>
-
-              <div class="flex flex-wrap gap-4 mt-8">
-                <NuxtLink
-                  to="/shop"
-                  class="px-7 py-4 rounded-2xl bg-black text-white font-semibold hover:scale-105 transition"
+        <div class="order-2 flex flex-col justify-between gap-10 p-6 sm:p-10 lg:order-1 lg:p-14">
+          <div>
+            <!-- All slide texts share one grid cell so the height never jumps -->
+            <div class="grid">
+              <div
+                v-for="(slide, index) in slides"
+                :key="slide.id"
+                class="col-start-1 row-start-1 transition-opacity duration-500"
+                :class="index === currentSlide ? 'opacity-100' : 'pointer-events-none opacity-0'"
+                :aria-hidden="index !== currentSlide"
+              >
+                <p
+                  class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-orange-200"
                 >
-                  Shop Deals
-                </NuxtLink>
+                  <span class="h-2 w-2 rounded-full bg-orange-400"></span>
+                  {{ sentence(slide.highlight) }}
+                </p>
 
-                <NuxtLink
-                  to="/deals"
-                  class="px-7 py-4 rounded-2xl bg-gray-400/80 text-white font-semibold hover:scale-105 transition"
+                <component
+                  :is="index === 0 ? 'h1' : 'h2'"
+                  class="mt-5 font-display text-5xl font-bold leading-[1.02] sm:text-6xl xl:text-7xl"
                 >
-                  Explore Deals
-                </NuxtLink>
+                  {{ slide.title }}
+                </component>
+
+                <p class="mt-5 max-w-md text-lg leading-8 text-slate-300">
+                  {{ slide.description }}
+                </p>
               </div>
             </div>
+
+            <div class="mt-9 flex flex-wrap gap-3">
+  <NuxtLink
+    to="/shop"
+    class="inline-flex items-center gap-2 rounded-full bg-orange-600 px-7 py-3.5 font-semibold text-white transition hover:bg-orange-500"
+  >
+    Shop now
+    <ArrowRight :size="18" />
+  </NuxtLink>
+  <NuxtLink
+    to="#categories"
+    class="inline-flex items-center rounded-full border border-white/25 px-7 py-3.5 font-semibold text-white transition hover:bg-white/10"
+  >
+    Browse categories
+  </NuxtLink>
+</div>
+          </div>
+
+          <!-- Slide picker: each tab is a slide, the bar shows time left -->
+          <div class="grid grid-cols-3 gap-3 sm:gap-4" role="tablist" aria-label="Featured products">
+            <button
+              v-for="(slide, index) in slides"
+              :key="'tab-' + slide.id"
+              type="button"
+              role="tab"
+              :aria-selected="index === currentSlide"
+              class="group text-left"
+              @click="goToSlide(index)"
+            >
+              <span class="block h-1 overflow-hidden rounded-full bg-white/20">
+                <span
+                  class="block h-full origin-left rounded-full bg-orange-400"
+                  :class="index === currentSlide ? 'hero-fill' : 'scale-x-0'"
+                ></span>
+              </span>
+              <span
+                class="mt-2.5 block truncate text-sm font-semibold transition"
+                :class="index === currentSlide ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'"
+              >
+                {{ slide.title }}
+              </span>
+            </button>
           </div>
         </div>
 
-        <div class="absolute bottom-4 left-4 z-20 flex gap-2">
-          <button
+        <div class="relative order-1 aspect-4/3 lg:order-2 lg:aspect-auto lg:min-h-136">
+          <img
             v-for="(slide, index) in slides"
-            :key="'dot-' + slide.id"
-            @click="goToSlide(index)"
-            class="w-3 h-3 rounded-full transition-all duration-300"
-            :class="
-              index === currentSlide ? 'bg-white scale-125' : 'bg-white/40'
-            "
-            :aria-label="`Go to slide ${index + 1}`"
+            :key="'img-' + slide.id"
+            :src="slide.image"
+            :alt="index === currentSlide ? slide.title : ''"
+            class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+            :class="index === currentSlide ? 'opacity-100' : 'opacity-0'"
           />
         </div>
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-5 py-10 scroll-reveal">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-3xl font-bold">Categories</h2>
-
+    <!-- Categories -->
+    <section id="categories" class="reveal-section mx-auto max-w-7xl scroll-mt-28 px-5 pt-20">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold sm:text-4xl">Shop by category</h2>
         <NuxtLink
           to="/shop"
-          class="flex items-center gap-1 text-white text-sm bg-orange-500 rounded-full px-3 py-2 hover:bg-orange-600 hover:translate-x-1 transition"
+          class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700"
         >
-          <span>View All</span>
-          <MoveRight :size="20" />
+          All products
+          <ArrowRight :size="16" />
         </NuxtLink>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+      <div class="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-6">
         <NuxtLink
-          v-for="(category, index) in categories"
+          v-for="category in categories"
           :key="category.id"
-          to="/shop"
-          class="group border border-gray-100 rounded-2xl p-4 hover:shadow-lg hover:border-orange-200 hover:-translate-y-2 transition-all duration-300"
-          :style="{
-            transitionDelay: `${index * 80}ms`,
-          }"
+          :to="{ path: '/shop', query: { category: category.value } }"
+          class="group flex flex-col gap-3"
         >
-          <div
-            class="h-28 w-28 bg-gray-50 rounded-lg overflow-hidden mb-3 mx-auto"
-          >
+          <span class="aspect-square overflow-hidden rounded-3xl bg-mist">
             <img
               :src="category.image"
               :alt="category.name"
-              class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
             />
-          </div>
-
-          <h3 class="text-center text-sm font-semibold text-gray-800">
+          </span>
+          <span class="text-center font-display text-base font-semibold text-ink transition group-hover:text-orange-600">
             {{ category.name }}
-          </h3>
+          </span>
         </NuxtLink>
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-5 py-8 scroll-reveal">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-3xl font-bold">Popular Products</h2>
-
+    <!-- Popular products -->
+    <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold sm:text-4xl">Popular products</h2>
         <NuxtLink
           to="/shop"
-          class="flex items-center gap-1 text-white text-sm bg-orange-500 rounded-full px-3 py-2 hover:bg-orange-600 hover:translate-x-1 transition"
+          class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700"
         >
-          <span>View All</span>
-          <MoveRight :size="20" />
+          View all
+          <ArrowRight :size="16" />
         </NuxtLink>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-        <div
-          v-for="(product, index) in displayedProducts"
+      <div class="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+        <ProductCard
+          v-for="product in displayedProducts"
           :key="product.id"
-          class="scroll-reveal-child"
-          :style="{
-            transitionDelay: `${index * 100}ms`,
-          }"
-        >
-          <ProductCard :product="product" />
-        </div>
-      </div>
-    </section>
-
-    <section class="max-w-7xl mx-auto px-5 py-10 scroll-reveal">
-      <div
-        class="bg-black rounded-2xl overflow-hidden grid md:grid-cols-2 items-center hover:shadow-2xl transition-shadow duration-500"
-      >
-        <div class="p-8 md:p-12 text-white">
-          <p class="text-gray-50 font-semibold">BIG SUMMER SALE</p>
-
-          <h2 class="text-3xl md:text-4xl font-bold">Save Up To 50%</h2>
-
-          <p class="text-gray-400 mt-3">
-            Get amazing deals on selected products.
-          </p>
-
-          <NuxtLink
-            to="/deals"
-            class="inline-block text-black bg-amber-50 hover:bg-amber-500 px-6 py-3 rounded-lg mt-6 font-semibold hover:scale-105 transition"
-          >
-            Shop Now
-          </NuxtLink>
-        </div>
-
-        <img
-          class="w-full h-64 md:h-72 object-cover hover:scale-105 transition duration-700"
-          src="https://i.pinimg.com/1200x/53/2f/71/532f71aa6886d0994a5a98d7755fb81c.jpg"
-          alt="Summer Sale"
+          :product="product"
         />
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-5 py-8 scroll-reveal">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">New Arrivals</h2>
-
-        <NuxtLink
-          to="/shop"
-          class="flex items-center gap-1 text-white text-sm bg-orange-500 rounded-full px-3 py-2 hover:bg-orange-600 hover:translate-x-1 transition"
-        >
-          <span>View All</span>
-          <MoveRight :size="20" />
-        </NuxtLink>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
-        <div
-          v-for="(item, index) in arrivals"
-          :key="item.id"
-          class="group scroll-reveal-child"
-          :style="{
-            transitionDelay: `${index * 100}ms`,
-          }"
-        >
-          <div class="relative bg-gray-500 rounded-2xl overflow-hidden">
-            <img
-              :src="item.image"
-              :alt="item.name"
-              class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
-            />
-
-            <button
-              class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center hover:bg-orange-500 hover:text-white hover:scale-110 transition"
-            >
-              <Heart :size="20" />
-            </button>
-          </div>
+    <!-- Sale banner -->
+    <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
+      <div
+        class="grid overflow-hidden rounded-4xl bg-orange-600 text-white md:grid-cols-2"
+      >
+        <div class="flex flex-col justify-center p-8 sm:p-12 lg:p-16">
+          <p class="text-lg font-semibold text-orange-100">Summer sale</p>
+          <h2 class="mt-2 font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
+            Save up to 50%
+          </h2>
+          <p class="mt-4 max-w-sm text-lg text-orange-50">
+            Great deals on selected products.
+          </p>
+          <NuxtLink
+            to="/shop"
+            class="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-7 py-3.5 font-semibold text-white transition hover:bg-white hover:text-ink"
+          >
+            Shop the sale
+            <ArrowRight :size="18" />
+          </NuxtLink>
         </div>
+
+        <img
+          class="h-64 w-full object-cover md:h-full md:min-h-80"
+          src="https://i.pinimg.com/1200x/53/2f/71/532f71aa6886d0994a5a98d7755fb81c.jpg"
+          alt="Summer sale"
+          loading="lazy"
+        />
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-5 py-10 scroll-reveal">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <!-- New arrivals -->
+    <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <h2 class="text-3xl font-bold sm:text-4xl">New arrivals</h2>
+        <NuxtLink
+          to="/shop"
+          class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-orange-600 hover:text-orange-700"
+        >
+          View all
+          <ArrowRight :size="16" />
+        </NuxtLink>
+      </div>
+
+      <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-5">
+        <NuxtLink
+          v-for="item in arrivals"
+          :key="item.id"
+          to="/shop"
+          class="group block"
+        >
+          <div class="aspect-square overflow-hidden rounded-2xl bg-mist">
+            <img
+              :src="item.image"
+              :alt="item.name"
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+          </div>
+          <h3 class="mt-3 line-clamp-1 font-display text-base font-semibold text-ink transition group-hover:text-orange-600">
+            {{ item.name }}
+          </h3>
+          <p class="mt-0.5 text-sm font-semibold text-gray-600">${{ item.price }}</p>
+        </NuxtLink>
+      </div>
+    </section>
+
+    <!-- Store promises -->
+    <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
+      <div
+        class="grid grid-cols-1 gap-6 rounded-3xl border border-line p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-4"
+      >
         <div
-          v-for="(feature, index) in features"
+          v-for="feature in features"
           :key="feature.id"
-          class="flex items-center gap-3 scroll-reveal-child"
-          :style="{
-            transitionDelay: `${index * 120}ms`,
-          }"
+          class="flex items-center gap-4"
         >
           <div
-            class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center shrink-0 hover:scale-110 hover:rotate-6 transition"
+            class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600"
           >
             <component
               :is="icons[feature.icon as keyof typeof icons]"
               :size="24"
-              class="text-white"
             />
           </div>
 
           <div>
-            <h3 class="font-semibold text-gray-900">
+            <h3 class="font-display font-semibold text-ink">
               {{ feature.title }}
             </h3>
-
             <p class="text-sm text-gray-500">
               {{ feature.description }}
             </p>
@@ -311,40 +303,3 @@ onUnmounted(() => {
     </section>
   </div>
 </template>
-
-<style scoped>
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(60px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-
-.scroll-reveal.reveal-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-reveal-child {
-  opacity: 0;
-  transform: translateY(40px) scale(0.96);
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
-}
-
-.reveal-show .scroll-reveal-child {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-reveal,
-  .scroll-reveal-child {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-</style>

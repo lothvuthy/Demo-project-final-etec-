@@ -86,7 +86,7 @@
       "image": "https://i.pinimg.com/736x/1a/83/c8/1a83c8eab1ef20410ad25ca5d394df03.jpg"
     }
   ],
-   "products": [
+  "products": [
     {
       "id": "1",
       "name": "Smart Watch Series 8",
@@ -219,12 +219,12 @@
       "reviews": 71,
       "image": "https://i.pinimg.com/1200x/47/95/9d/47959dac3a5e9b6b8811d6c29557bd6a.jpg"
     },
-     {
+    {
       "id": "13",
       "name": "GAGU",
       "category": "Fashion",
-      "price": 40.00,
-      "oldPrice": 50.00,
+      "price": 40,
+      "oldPrice": 50,
       "discount": 20,
       "rating": 4.8,
       "reviews": 120,
@@ -234,8 +234,8 @@
       "id": "14",
       "name": "CCW",
       "category": "Fashion",
-      "price": 40.00,
-      "oldPrice": 50.00,
+      "price": 40,
+      "oldPrice": 50,
       "discount": 20,
       "rating": 4.8,
       "reviews": 120,
@@ -245,8 +245,8 @@
       "id": "15",
       "name": "THE",
       "category": "Fashion",
-      "price": 40.00,
-      "oldPrice": 50.00,
+      "price": 40,
+      "oldPrice": 50,
       "discount": 20,
       "rating": 4.8,
       "reviews": 120,
@@ -256,8 +256,8 @@
       "id": "16",
       "name": "JUBE",
       "category": "Fashion",
-      "price": 40.00,
-      "oldPrice": 50.00,
+      "price": 40,
+      "oldPrice": 50,
       "discount": 20,
       "rating": 4.8,
       "reviews": 120,
@@ -306,6 +306,16 @@
       "rating": 4.8,
       "reviews": 120,
       "image": "https://i.pinimg.com/736x/49/3d/92/493d921b68ba3ad712927814ca8ae39b.jpg"
+    },
+    {
+      "name": "Minibage",
+      "price": 20,
+      "oldPrice": 40,
+      "discount": 50,
+      "rating": 5,
+      "reviews": 0,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkjOUSWpSL91uyHd-ZEX8oDo6UEFKYsH_bMRPo1EnY0w&s",
+      "id": "WmfC8DKC9E0"
     }
   ],
   "arrivals": [
@@ -370,25 +380,15 @@
       "email": "lothvuthy@gmail.com",
       "password": "123456",
       "id": "RvdMxNb1OI8",
-      "wishlist": [
-        "3"
-      ],
+      "wishlist": [],
       "cart": [
-        {
-          "id": "3",
-          "name": "Canon EOS Camera",
-          "price": 499.99,
-          "oldPrice": 599.99,
-          "image": "https://i.pinimg.com/736x/91/8a/56/918a5630c23dbd06403f47281d089c92.jpg",
-          "qty": 3
-        },
         {
           "id": "1",
           "name": "Smart Watch Series 8",
           "price": 199.99,
           "oldPrice": 249.99,
           "image": "https://i.pinimg.com/736x/94/2f/fd/942ffd38083ba3063b7004e934661de7.jpg",
-          "qty": 3
+          "qty": 1
         }
       ],
       "role": "admin",
@@ -400,17 +400,11 @@
       "email": "seakleavlun@gmail.com",
       "password": "123456",
       "address": "",
-      "wishlist": [],
-      "cart": [
-        {
-          "id": "2",
-          "name": "Wireless Headphones",
-          "price": 59.99,
-          "oldPrice": 89.99,
-          "image": "https://i.pinimg.com/1200x/56/3b/3d/563b3d63577f621215a82aa2f45df7c7.jpg",
-          "qty": 1
-        }
+      "wishlist": [
+        "16",
+        "17"
       ],
+      "cart": [],
       "role": "admin",
       "avatar": ""
     },
@@ -433,6 +427,24 @@
       "cart": [],
       "role": "user",
       "id": "38OG-ZtRuKw"
+    },
+    {
+      "name": "Tra",
+      "email": "tra@gmail.com",
+      "password": "123456",
+      "wishlist": [],
+      "cart": [],
+      "role": "user",
+      "id": "a5N2uEljjJs"
+    },
+    {
+      "name": "nana",
+      "email": "seakleavlun@gmail.com",
+      "password": "123456",
+      "wishlist": [],
+      "cart": [],
+      "role": "user",
+      "id": "BJK7t0dlBwA"
     }
   ],
   "messages": [],

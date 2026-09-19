@@ -1,7 +1,75 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
+/* ------------------------------------------------------------------
+   ShopiO design tokens
+   Overriding the built-in `orange` scale re-colours every existing
+   page (shop, cart, auth, admin...) without touching their markup.
+   ------------------------------------------------------------------ */
+@theme {
+  --font-sans: "Figtree", "Kantumruy Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Figtree", "Kantumruy Pro", ui-sans-serif, sans-serif;
+
+  --color-orange-50: #fff3eb;
+  --color-orange-100: #ffe3d0;
+  --color-orange-200: #ffc7a1;
+  --color-orange-300: #ffa56b;
+  --color-orange-400: #f98338;
+  --color-orange-500: #e4570e;
+  --color-orange-600: #c84a08;
+  --color-orange-700: #a03b07;
+
+  --color-ink: #15171c;
+  --color-mist: #f4f5f7;
+  --color-line: #e6e8ec;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: var(--color-orange-200);
+    color: var(--color-ink);
+  }
+
+  /* Visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-orange-500);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Hero slide timer: fills over the same 5s the slideshow waits */
+@keyframes hero-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero-fill {
+  animation: hero-fill 5s linear forwards;
 }
 
 body {

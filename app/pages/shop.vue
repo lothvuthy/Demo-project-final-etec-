@@ -7,7 +7,11 @@ import ProductCard from "~/components/users/product/ProductCard.vue";
 
 const search = ref("");
 const sortBy = ref("default");
-const selectedCategory = ref("all");
+const route = useRoute();
+const knownCategories = shopio.categories.map((category) => category.value);
+const selectedCategory = ref(
+  knownCategories.includes(route.query.category) ? route.query.category : "all",
+);
 
 const categories = computed(() => {
   const allCategory = {

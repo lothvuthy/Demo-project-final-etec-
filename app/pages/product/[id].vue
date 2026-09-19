@@ -100,9 +100,9 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
 
         <!-- Details -->
         <div>
-          <h1 class="text-3xl md:text-4xl font-black text-gray-900 mt-1 mb-3">
-            {{ product.name }}
-          </h1>
+          <h1 class="text-3xl md:text-4xl font-black text-gray-900 mt-1 mb-1.5">
+    {{ product.name }}
+  </h1>
 
           <!-- Rating -->
           <div class="flex items-center gap-2 mb-4">
