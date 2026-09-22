@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { useState } from '#app'
+import shopio from '~/data/shopio.json'
 
 export interface AuthUser {
   id: string | number
@@ -15,6 +16,7 @@ export interface AuthUser {
 }
 
 const STORAGE_KEY = 'eshop_user'
+const USERS_KEY = 'eshop_users'
 const API_USERS_URL = 'http://localhost:8000/users'
 
 /**
@@ -24,6 +26,25 @@ const API_USERS_URL = 'http://localhost:8000/users'
  */
 export const useAuth = () => {
   const user = useState<AuthUser | null>('auth-user', () => null)
+
+  const localUsers = (): AuthUser[] => {
+    if (import.meta.server) return []
+    const raw = localStorage.getItem(USERS_KEY)
+    if (raw) {
+      try {
+        return JSON.parse(raw)
+      } catch {
+        localStorage.removeItem(USERS_KEY)
+      }
+    }
+    const users = (shopio.users ?? []) as AuthUser[]
+    localStorage.setItem(USERS_KEY, JSON.stringify(users))
+    return users
+  }
+
+  const saveLocalUsers = (users: AuthUser[]) => {
+    if (import.meta.client) localStorage.setItem(USERS_KEY, JSON.stringify(users))
+  }
 
   // Called once on app startup (see app/plugins/auth.client.ts) to restore
   // the session from localStorage.
@@ -55,6 +76,25 @@ export const useAuth = () => {
 
   const isLoggedIn = computed(() => !!user.value)
 
+  const authenticate = async (email: string, password: string) => {
+    try {
+      return await $fetch<AuthUser[]>(API_USERS_URL)
+        .then((users) => users.find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null)
+    } catch {
+      return localUsers().find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null
+    }
+  }
+
+  const register = async (details: Omit<AuthUser, 'id'>) => {
+    try {
+      return await $fetch<AuthUser>(API_USERS_URL, { method: 'POST', body: details })
+    } catch {
+      const created = { ...details, id: `local-${Date.now()}` } as AuthUser
+      saveLocalUsers([...localUsers(), created])
+      return created
+    }
+  }
+
   /**
    * Persist a partial change (cart / wishlist / profile fields) to the
    * json-server backend, then merge the server response back into local
@@ -63,12 +103,18 @@ export const useAuth = () => {
   const updateUser = async (patch: Partial<AuthUser>) => {
     if (!user.value) return
     const id = user.value.id
-    const updated = await $fetch<AuthUser>(`${API_USERS_URL}/${id}`, {
-      method: 'PATCH',
-      body: patch
-    })
-    setUser({ ...user.value, ...updated })
+    try {
+      const updated = await $fetch<AuthUser>(`${API_USERS_URL}/${id}`, {
+        method: 'PATCH',
+        body: patch
+      })
+      setUser({ ...user.value, ...updated })
+    } catch {
+      const updated = { ...user.value, ...patch }
+      saveLocalUsers(localUsers().map((item) => item.id === id ? updated : item))
+      setUser(updated)
+    }
   }
 
-  return { user, isLoggedIn, loadFromStorage, setUser, logout, updateUser }
+  return { user, isLoggedIn, loadFromStorage, setUser, logout, authenticate, register, updateUser }
 }

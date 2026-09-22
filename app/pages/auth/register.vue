@@ -87,10 +87,6 @@ import { ref } from 'vue'
 import { useAuth } from '~/composables/useAuth'
 
 
-const API_REGISTER_URL = 'http://localhost:8000/users'
-
-
-
 const form = ref({
   name: '',
   email: '',
@@ -123,26 +119,21 @@ const handleRegister = async () => {
   message.value = { text: '', type: '' }
 
   try {
-  
-    const result = await $fetch(API_REGISTER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: {
-        name: form.value.name.trim(),
-        email: form.value.email.trim(),
-        password: form.value.password,
-        wishlist: [],
-        cart: [],
-        role: 'user'
-      }
+    const { register: registerUser, setUser } = useAuth()
+    const result = await registerUser({
+      name: form.value.name.trim(),
+      email: form.value.email.trim(),
+      password: form.value.password,
+      wishlist: [],
+      cart: [],
+      role: 'user'
     })
 
    
     message.value = { text: ' Account created successfully! Redirecting...', type: 'success' }
 
   
-   const { setUser } = useAuth()
-setUser(result)
+    setUser(result)
 
 setTimeout(() => {
   navigateTo('/')

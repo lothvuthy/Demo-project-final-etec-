@@ -60,8 +60,6 @@
 import { ref } from 'vue'
 import { useAuth } from '~/composables/useAuth'
 
-const API_USERS_URL = 'http://localhost:8000/users'
-
 const form = ref({
   email: '',
   password: ''
@@ -91,17 +89,8 @@ const handleLogin = async () => {
   }
 
   try {
-  
-    const users = await $fetch(API_USERS_URL, {
-      method: 'GET'
-    })
-
-  
-    const user = users.find(
-      (user) =>
-        user.email.toLowerCase() === form.value.email.trim().toLowerCase() &&
-        user.password === form.value.password.trim()
-    )
+    const { authenticate, setUser } = useAuth()
+    const user = await authenticate(form.value.email.trim(), form.value.password.trim())
 
   
     if (!user) {
@@ -119,7 +108,6 @@ const handleLogin = async () => {
     }
 
 
-    const { setUser } = useAuth()
     setUser(user)
 
   
