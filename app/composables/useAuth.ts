@@ -17,7 +17,6 @@ export interface AuthUser {
 
 const STORAGE_KEY = 'eshop_user'
 const USERS_KEY = 'eshop_users'
-const API_USERS_URL = 'http://localhost:8000/users'
 
 /**
  * Shared, reactive auth state. `useState` makes this a singleton across the
@@ -25,6 +24,8 @@ const API_USERS_URL = 'http://localhost:8000/users'
  * instantly when the user logs in/out or their cart/wishlist changes.
  */
 export const useAuth = () => {
+  const config = useRuntimeConfig()
+  const apiUsersUrl = config.public.apiBase ? `${config.public.apiBase}/users` : ''
   const user = useState<AuthUser | null>('auth-user', () => null)
 
   const localUsers = (): AuthUser[] => {
@@ -77,22 +78,28 @@ export const useAuth = () => {
   const isLoggedIn = computed(() => !!user.value)
 
   const authenticate = async (email: string, password: string) => {
-    try {
-      return await $fetch<AuthUser[]>(API_USERS_URL)
+    if (apiUsersUrl) {
+      try {
+        return await $fetch<AuthUser[]>(apiUsersUrl)
         .then((users) => users.find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null)
-    } catch {
-      return localUsers().find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null
+      } catch {
+        // Fall back to browser storage when the API is temporarily unavailable.
+      }
     }
+    return localUsers().find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null
   }
 
   const register = async (details: Omit<AuthUser, 'id'>) => {
-    try {
-      return await $fetch<AuthUser>(API_USERS_URL, { method: 'POST', body: details })
-    } catch {
-      const created = { ...details, id: `local-${Date.now()}` } as AuthUser
-      saveLocalUsers([...localUsers(), created])
-      return created
+    if (apiUsersUrl) {
+      try {
+        return await $fetch<AuthUser>(apiUsersUrl, { method: 'POST', body: details })
+      } catch {
+        // Fall back to browser storage when the API is unavailable.
+      }
     }
+    const created = { ...details, id: `local-${Date.now()}` } as AuthUser
+    saveLocalUsers([...localUsers(), created])
+    return created
   }
 
   /**
@@ -103,17 +110,21 @@ export const useAuth = () => {
   const updateUser = async (patch: Partial<AuthUser>) => {
     if (!user.value) return
     const id = user.value.id
-    try {
-      const updated = await $fetch<AuthUser>(`${API_USERS_URL}/${id}`, {
+    if (apiUsersUrl) {
+      try {
+        const updated = await $fetch<AuthUser>(`${apiUsersUrl}/${id}`, {
         method: 'PATCH',
         body: patch
-      })
-      setUser({ ...user.value, ...updated })
-    } catch {
-      const updated = { ...user.value, ...patch }
-      saveLocalUsers(localUsers().map((item) => item.id === id ? updated : item))
-      setUser(updated)
+        })
+        setUser({ ...user.value, ...updated })
+        return
+      } catch {
+        // Fall back to browser storage when the API is unavailable.
+      }
     }
+    const updated = { ...user.value, ...patch }
+    saveLocalUsers(localUsers().map((item) => item.id === id ? updated : item))
+    setUser(updated)
   }
 
   return { user, isLoggedIn, loadFromStorage, setUser, logout, authenticate, register, updateUser }
