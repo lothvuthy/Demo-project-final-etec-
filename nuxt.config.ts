@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   app: {
+    baseURL: '/Demo-project-final-etec-/',
     head: {
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
