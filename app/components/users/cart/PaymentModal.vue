@@ -114,6 +114,14 @@ const handleDone = () => {
                   <div v-else-if="khqrError" class="w-full text-center px-2">
                     <p class="text-xs text-red-500">{{ khqrError }}</p>
                     <button
+                      v-if="khqrMd5?.startsWith('demo-')"
+                      type="button"
+                      class="mt-4 rounded-lg bg-orange-500 px-4 py-2 text-xs font-semibold text-white hover:bg-orange-600"
+                      @click="confirmPayment"
+                    >
+                      Place demo order
+                    </button>
+                    <button
                       type="button"
                       class="mt-3 text-xs font-semibold text-orange-500 hover:underline"
                       @click="generateKhqr"

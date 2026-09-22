@@ -8,9 +8,11 @@ import {
   Search, SlidersHorizontal
 } from 'lucide-vue-next'
 import { useAuth } from '~/composables/useAuth'
+import { useLocalStore } from '~/composables/useLocalStore'
 
 const API = 'http://localhost:8000'
 const { user, logout } = useAuth()
+const localStore = useLocalStore()
 const router = useRouter()
 type AdminSection = 'dashboard' | 'products' | 'users' | 'messages' | 'orders'
 const active = ref<AdminSection>('dashboard')
@@ -171,7 +173,12 @@ const loadAll = async () => {
     orders.value = o || []
   } catch (error) {
     console.error(error)
-    notice.value = { text: 'Cannot connect to JSON Server. Make sure it is running on port 8000.', type: 'error' }
+    categories.value = localStore.read('categories')
+    products.value = localStore.read('products')
+    users.value = localStore.read('users')
+    messages.value = localStore.read('messages')
+    orders.value = localStore.read('orders')
+    notice.value = { text: 'Using browser storage because JSON Server is unavailable.', type: 'success' }
   } finally {
     loading.value = false
   }
@@ -223,7 +230,22 @@ const addProduct = async () => {
     await loadAll()
   } catch (error) {
     console.error(error)
-    formError.value = 'Could not add the product. Make sure JSON Server is running on port 8000.'
+    localStore.add('products', {
+      name: String(f.name).trim(),
+      ...(f.category ? { category: f.category } : {}),
+      price: Number(f.price),
+      ...(f.oldPrice !== '' ? { oldPrice: Number(f.oldPrice) } : {}),
+      ...(f.discount !== '' ? { discount: Number(f.discount) } : {}),
+      rating: f.rating === '' ? 5 : Number(f.rating),
+      reviews: Number(f.reviews) || 0,
+      image: String(f.image).trim()
+    })
+    const addedName = String(f.name).trim()
+    form.value = emptyForm()
+    showAddModal.value = false
+    notice.value = { text: `"${addedName}" was added to browser storage.`, type: 'success' }
+    active.value = 'products'
+    await loadAll()
   } finally {
     submitting.value = false
   }
@@ -237,7 +259,9 @@ const deleteResource = async (type: 'products' | 'messages' | 'orders', id: stri
     await loadAll()
   } catch (error) {
     console.error(error)
-    notice.value = { text: `Failed to delete ${label}.`, type: 'error' }
+    localStore.remove(type, id)
+    notice.value = { text: `${label.charAt(0).toUpperCase() + label.slice(1)} deleted from browser storage.`, type: 'success' }
+    await loadAll()
   }
 }
 

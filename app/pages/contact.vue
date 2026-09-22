@@ -201,6 +201,7 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
 import { useAuth } from '~/composables/useAuth'
+import { useLocalStore } from '~/composables/useLocalStore'
 
 // ==============================================
 // 🔌 API CONFIGURATION — json-server, same backend as auth/cart/wishlist
@@ -208,6 +209,7 @@ import { useAuth } from '~/composables/useAuth'
 const API_MESSAGES_URL = 'http://localhost:8000/messages'
 
 const { user, isLoggedIn } = useAuth()
+const localStore = useLocalStore()
 
 const form = ref({
   fullName: '',
@@ -263,8 +265,19 @@ const handleSubmit = async () => {
       message: ''
     }
   } catch (err) {
-    // ❌ Error
-    message.value = { text: '❌ Failed to send message. Please try again.', type: 'error' }
+    localStore.add('messages', {
+      userId: user.value?.id,
+      ...form.value,
+      createdAt: new Date().toISOString()
+    })
+    message.value = { text: '✅ Message saved in this browser. We will reply soon.', type: 'success' }
+    form.value = {
+      fullName: user.value?.name || '',
+      email: user.value?.email || '',
+      orderNumber: '',
+      subject: '',
+      message: ''
+    }
     console.error('Contact Error:', err)
   } finally {
     loading.value = false
