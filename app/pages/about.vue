@@ -1,14 +1,11 @@
 <template>
   <div class="min-h-screen bg-white">
-    <!-- ===== 🎨 Hero Banner — Orange → Blue Gradient ===== -->
     <section
       class="relative h-64 sm:h-80 lg:h-96 flex items-center justify-center overflow-hidden"
     >
-      <!-- Orange to Blue Gradient Background -->
       <div
         class="absolute inset-0 bg-linear-to-r from-orange-500 to-blue-600"
       ></div>
-      <!-- Optional: Soft overlay for better text readability -->
       <div class="absolute inset-0 bg-black/10"></div>
       <h1
         class="relative text-4xl sm:text-5xl font-bold text-white z-10 tracking-wide drop-shadow-md"
@@ -19,7 +16,6 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     
-      <!-- ===== Journey Section ===== -->
       <section class="reveal-section text-center mb-16">
         <h2 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">
           The Journey So Far
@@ -33,9 +29,7 @@
           }}
         </p>
       </section>
-      <!-- ===== Mission & Vision ===== -->
       <section class="reveal-section grid md:grid-cols-2 gap-6 mb-16">
-        <!-- Our Mission -->
         <div class="bg-orange-50 rounded-lg p-6 border-l-4 border-orange-500">
           <div
             class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mb-4"
@@ -69,7 +63,6 @@
           </p>
         </div>
 
-        <!-- Our Vision -->
         <div class="bg-orange-50 rounded-lg p-6 border-l-4 border-orange-400">
           <div
             class="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center mb-4"
@@ -104,7 +97,6 @@
         </div>
       </section>
 
-      <!-- ===== Core Values ===== -->
       <section class="reveal-section text-center mb-16">
         <h2 class="text-lg font-semibold text-gray-900 mb-8">Core Values</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -197,7 +189,6 @@
 
       <hr class="border-orange-100 mb-12" />
 
-      <!-- ===== Stats Section ===== -->
       <section class="reveal-section text-center mb-16">
         <h2 class="text-lg font-semibold text-gray-900 mb-8">Our Growth</h2>
         <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-10 max-w-3xl mx-auto">
@@ -229,19 +220,12 @@
       </section>
     </div>
 
-    <!-- ===== Call to Action Section ===== -->
-
-
-    <!-- ===== Footer ===== -->
-        <!-- ===== Footer ===== -->
     <footer class="bg-orange-50 py-8 text-center border-t border-orange-100">
       <p class="font-bold text-orange-500 text-lg mb-3">SHopiO</p>
 
-      <!-- Contact us on social -->
       <p class="text-xs font-semibold text-gray-500 mb-3">Contact us</p>
     <div class="flex justify-center gap-3 mb-4">
 
-  <!-- TikTok -->
   <a
     href="https://tiktok.com/@shopio"
     target="_blank"
@@ -254,19 +238,16 @@
       viewBox="0 0 24 24"
       aria-hidden="true"
     >
-      <!-- TikTok shadow -->
       <path
         fill="#25F4EE"
         d="M15.5 3.2c.3 1.7 1.3 3 2.9 3.7.5.2 1 .3 1.6.3v3.1c-1.4 0-2.8-.4-4-1.1v6.1c0 3.1-2.5 5.7-5.7 5.7S4.6 18.4 4.6 15.3c0-3.1 2.5-5.7 5.7-5.7.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.4 0-2.6 1.1-2.6 2.6s1.1 2.6 2.6 2.6 2.6-1.1 2.6-2.6V3.2h2.6z"
       />
 
-      <!-- TikTok red -->
       <path
         fill="#FE2C55"
         d="M16.5 3.2c.3 1.7 1.3 3 2.9 3.7.5.2 1 .3 1.6.3v2.4c-1.4 0-2.8-.4-4-1.1v6.1c0 3.1-2.5 5.7-5.7 5.7-1.2 0-2.3-.4-3.2-1 1 .2 2 .1 2.9-.4 1.1-.6 1.8-1.8 1.8-3.1V3.2h3.7z"
       />
 
-      <!-- TikTok main -->
       <path
         fill="#111111"
         d="M14.2 2.5v11.9c0 1.7-1.4 3.1-3.1 3.1S8 16.1 8 14.4s1.4-3.1 3.1-3.1c.4 0 .8.1 1.2.2V8.7c-.4-.1-.8-.1-1.2-.1-3.3 0-6 2.6-6 5.8s2.7 5.8 6 5.8 6-2.6 6-5.8V8.3c1.1.6 2.4.9 3.7.9V6.5c-2.2-.1-4-1.8-4.2-4h-2.4z"
@@ -275,7 +256,6 @@
   </a>
 
 
-  <!-- Telegram -->
   <a
     href="https://t.me/shopio"
     target="_blank"
@@ -302,7 +282,6 @@
   </a>
 
 
-  <!-- Facebook -->
   <a
     href="https://facebook.com/shopio"
     target="_blank"
