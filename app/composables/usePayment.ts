@@ -4,8 +4,6 @@ import { useCart } from './useCart'
 import { useAuth } from './useAuth'
 import { useLocalStore } from './useLocalStore'
 
-// URL of the Flask (bakong-api) backend. Change this if you deploy it elsewhere.
-const BAKONG_API_BASE = 'http://localhost:5000'
 const MAX_POLL_FAILURES = 10 // ~30s of consecutive errors = treat the QR as expired/invalid
 
 /**
@@ -16,6 +14,8 @@ const MAX_POLL_FAILURES = 10 // ~30s of consecutive errors = treat the QR as exp
  * the user is already on.
  */
 export const usePayment = () => {
+  const config = useRuntimeConfig()
+  const bakongApiBase = String(config.public.bakongApiBase || '').replace(/\/$/, '')
   const { items, subtotal, clear } = useCart()
   const { user } = useAuth()
   const localStore = useLocalStore()
@@ -103,7 +103,7 @@ export const usePayment = () => {
     pollTimer.value = setInterval(async () => {
       if (!khqrMd5.value) return
       try {
-        const res: any = await $fetch(`${BAKONG_API_BASE}/api/check-payment`, {
+        const res: any = await $fetch(`${bakongApiBase}/api/check-payment`, {
           query: { md5: khqrMd5.value },
         })
         pollFailCount.value = 0
@@ -132,7 +132,8 @@ export const usePayment = () => {
     stopPolling()
 
     try {
-      const res: any = await $fetch(`${BAKONG_API_BASE}/api/generate-qr`, {
+      if (!bakongApiBase) throw new Error('Bakong API URL is not configured')
+      const res: any = await $fetch(`${bakongApiBase}/api/generate-qr`, {
         method: 'POST',
         body: {
           amount: total.value,
