@@ -178,7 +178,7 @@ const loadAll = async () => {
     users.value = localStore.read('users')
     messages.value = localStore.read('messages')
     orders.value = localStore.read('orders')
-    notice.value = { text: 'Using browser storage because JSON Server is unavailable.', type: 'success' }
+    notice.value = { text: '', type: '' }
   } finally {
     loading.value = false
   }
@@ -243,7 +243,7 @@ const addProduct = async () => {
     const addedName = String(f.name).trim()
     form.value = emptyForm()
     showAddModal.value = false
-    notice.value = { text: `"${addedName}" was added to browser storage.`, type: 'success' }
+    notice.value = { text: `"${addedName}" was added to your store.`, type: 'success' }
     active.value = 'products'
     await loadAll()
   } finally {
@@ -260,7 +260,7 @@ const deleteResource = async (type: 'products' | 'messages' | 'orders', id: stri
   } catch (error) {
     console.error(error)
     localStore.remove(type, id)
-    notice.value = { text: `${label.charAt(0).toUpperCase() + label.slice(1)} deleted from browser storage.`, type: 'success' }
+    notice.value = { text: `${label.charAt(0).toUpperCase() + label.slice(1)} deleted successfully.`, type: 'success' }
     await loadAll()
   }
 }
