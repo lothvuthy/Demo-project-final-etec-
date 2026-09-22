@@ -4,7 +4,7 @@ import { useCart } from './useCart'
 import { useAuth } from './useAuth'
 import { useLocalStore } from './useLocalStore'
 
-const MAX_POLL_FAILURES = 10 // ~30s of consecutive errors = treat the QR as expired/invalid
+const MAX_POLL_FAILURES = 10
 
 
 export const usePayment = () => {

@@ -21,7 +21,7 @@ const {
 } = usePayment();
 
 const handleBackdropClick = () => {
-  if (paying.value) return; // don't let an in-flight order save get dismissed
+  if (paying.value) return;
   closePayment();
 };
 
