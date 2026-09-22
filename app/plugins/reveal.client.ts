@@ -1,6 +1,3 @@
-// Wires up the scroll-reveal animation defined in app/assets/css/main.css.
-// Any element with the `reveal-section` class fades + slides into view the
-// first time it scrolls into the viewport.
 export default defineNuxtPlugin(() => {
   if (typeof window === "undefined") return;
 
@@ -28,9 +25,6 @@ export default defineNuxtPlugin(() => {
     );
 
     observeAll();
-
-    // Re-scan when Nuxt swaps pages or a page renders new sections,
-    // so newly mounted `.reveal-section` elements still get observed.
     const mutationObserver = new MutationObserver(() => observeAll());
     mutationObserver.observe(document.body, { childList: true, subtree: true });
   };

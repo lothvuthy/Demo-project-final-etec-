@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------
-   ShopiO design tokens
-   Overriding the built-in `orange` scale re-colours every existing
-   page (shop, cart, auth, admin...) without touching their markup.
-   ------------------------------------------------------------------ */
+
 @theme {
   --font-sans: "Figtree", "Kantumruy Pro", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bricolage Grotesque", "Figtree", "Kantumruy Pro", ui-sans-serif, sans-serif;
@@ -50,7 +46,7 @@
     color: var(--color-ink);
   }
 
-  /* Visible keyboard focus everywhere */
+
   :focus-visible {
     outline: 2px solid var(--color-orange-500);
     outline-offset: 2px;
@@ -58,7 +54,7 @@
   }
 }
 
-/* Hero slide timer: fills over the same 5s the slideshow waits */
+
 @keyframes hero-fill {
   from {
     transform: scaleX(0);
@@ -76,16 +72,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Scroll animation: content stays visible by default, so it never disappears
-   if JavaScript/IntersectionObserver is unavailable. */
+
 .reveal-section {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Animation is enabled only after the observer is ready. This prevents
-     intermittent blank sections during hydration/page navigation. */
+
   body.reveal-enabled .reveal-section:not(.is-visible) {
     opacity: 0;
     transform: translateY(24px);

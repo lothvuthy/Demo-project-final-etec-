@@ -38,7 +38,7 @@ const handleLogout = () => {
       aria-label="Main"
     >
       <div class="h-16 lg:h-18 flex items-center justify-between gap-4">
-        <!-- Brand -->
+
         <NuxtLink to="/" class="flex items-center gap-2.5 shrink-0" aria-label="ShopiO home">
           <span
             class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500 text-white"
@@ -50,7 +50,7 @@ const handleLogout = () => {
           </span>
         </NuxtLink>
 
-        <!-- Desktop links -->
+
         <div class="hidden lg:flex items-center gap-1 text-sm font-semibold">
           <NuxtLink
             v-for="link in links"
@@ -68,9 +68,9 @@ const handleLogout = () => {
           </NuxtLink>
         </div>
 
-        <!-- Actions -->
+
         <div class="flex items-center gap-1 sm:gap-1.5">
-          <!-- Wishlist -->
+
           <NuxtLink
             to="/wishlist"
             class="relative grid h-10 w-10 place-items-center rounded-full text-gray-700 transition hover:bg-mist hover:text-orange-600"
@@ -85,7 +85,7 @@ const handleLogout = () => {
             </span>
           </NuxtLink>
 
-          <!-- Cart -->
+
           <NuxtLink
             to="/cart"
             class="relative grid h-10 w-10 place-items-center rounded-full text-gray-700 transition hover:bg-mist hover:text-orange-600"
@@ -100,7 +100,7 @@ const handleLogout = () => {
             </span>
           </NuxtLink>
 
-                    <!-- Auth: sign in or user menu -->
+
           <NuxtLink
             v-if="!isLoggedIn"
             to="/auth/login"
@@ -163,7 +163,7 @@ const handleLogout = () => {
             </Transition>
           </div>
 
-          <!-- Mobile menu toggle -->
+
           <button
             type="button"
             class="grid h-10 w-10 place-items-center rounded-full text-gray-700 transition hover:bg-mist lg:hidden"
@@ -177,7 +177,7 @@ const handleLogout = () => {
         </div>
       </div>
 
-      <!-- Mobile links -->
+
       <Transition name="menu">
         <div v-if="isMenuOpen" class="border-t border-line py-3 lg:hidden">
           <div class="flex flex-col gap-1 text-sm font-semibold">

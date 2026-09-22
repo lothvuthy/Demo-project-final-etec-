@@ -30,8 +30,6 @@ const displayedProducts = computed(() => products.slice(0, 4));
 
 const currentSlide = ref(0);
 let timer: ReturnType<typeof setInterval> | undefined;
-
-// "TRENDING NOW" -> "Trending now"
 const sentence = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 
@@ -41,8 +39,6 @@ const startTimer = () => {
     currentSlide.value = (currentSlide.value + 1) % slides.length;
   }, SLIDE_MS);
 };
-
-// Restarting the timer on every manual pick keeps the progress bar in sync.
 const goToSlide = (index: number) => {
   currentSlide.value = index;
   startTimer();
@@ -54,14 +50,14 @@ onUnmounted(() => clearInterval(timer));
 
 <template>
   <div class="min-h-screen bg-white">
-    <!-- Hero -->
+    
     <section class="px-4 pt-5 md:px-8">
       <div
         class="mx-auto grid max-w-7xl overflow-hidden rounded-4xl bg-ink text-white lg:grid-cols-[1fr_1.05fr]"
       >
         <div class="order-2 flex flex-col justify-between gap-10 p-6 sm:p-10 lg:order-1 lg:p-14">
           <div>
-            <!-- All slide texts share one grid cell so the height never jumps -->
+            
             <div class="grid">
               <div
                 v-for="(slide, index) in slides"
@@ -107,7 +103,7 @@ onUnmounted(() => clearInterval(timer));
 </div>
           </div>
 
-          <!-- Slide picker: each tab is a slide, the bar shows time left -->
+          
           <div class="grid grid-cols-3 gap-3 sm:gap-4" role="tablist" aria-label="Featured products">
             <button
               v-for="(slide, index) in slides"
@@ -147,7 +143,7 @@ onUnmounted(() => clearInterval(timer));
       </div>
     </section>
 
-    <!-- Categories -->
+    
     <section id="categories" class="reveal-section mx-auto max-w-7xl scroll-mt-28 px-5 pt-20">
       <div class="mb-8 flex items-end justify-between gap-4">
         <h2 class="text-3xl font-bold sm:text-4xl">Shop by category</h2>
@@ -182,7 +178,7 @@ onUnmounted(() => clearInterval(timer));
       </div>
     </section>
 
-    <!-- Popular products -->
+    
     <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
       <div class="mb-8 flex items-end justify-between gap-4">
         <h2 class="text-3xl font-bold sm:text-4xl">Popular products</h2>
@@ -204,7 +200,7 @@ onUnmounted(() => clearInterval(timer));
       </div>
     </section>
 
-    <!-- Sale banner -->
+    
     <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
       <div
         class="grid overflow-hidden rounded-4xl bg-orange-600 text-white md:grid-cols-2"
@@ -235,7 +231,7 @@ onUnmounted(() => clearInterval(timer));
       </div>
     </section>
 
-    <!-- New arrivals -->
+    
     <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
       <div class="mb-8 flex items-end justify-between gap-4">
         <h2 class="text-3xl font-bold sm:text-4xl">New arrivals</h2>
@@ -271,7 +267,7 @@ onUnmounted(() => clearInterval(timer));
       </div>
     </section>
 
-    <!-- Store promises -->
+    
     <section class="reveal-section mx-auto max-w-7xl px-5 pt-20">
       <div
         class="grid grid-cols-1 gap-6 rounded-3xl border border-line p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-4"

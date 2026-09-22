@@ -6,13 +6,7 @@ import { useLocalStore } from './useLocalStore'
 
 const MAX_POLL_FAILURES = 10 // ~30s of consecutive errors = treat the QR as expired/invalid
 
-/**
- * Shared KHQR payment flow, surfaced as a modal/alert instead of a
- * dedicated /checkout page. Any button anywhere in the app (cart,
- * wishlist, product page, "Buy Now" on a card) just calls
- * `openPayment()` and this same modal pops up on top of whatever page
- * the user is already on.
- */
+
 export const usePayment = () => {
   const config = useRuntimeConfig()
   const bakongApiBase = String(config.public.bakongApiBase || '').replace(/\/$/, '')
@@ -52,7 +46,6 @@ export const usePayment = () => {
     orderError.value = false
 
     try {
-      // Record the order on the same json-server backend used everywhere else
       const order: any = await $fetch('http://localhost:8000/orders', {
         method: 'POST',
         body: {
@@ -152,9 +145,6 @@ export const usePayment = () => {
       khqrLoading.value = false
     }
   }
-
-  // Open the payment alert/modal from anywhere (cart, wishlist, product
-  // page, buy-now button) and kick off KHQR generation right away.
   const openPayment = () => {
     paid.value = false
     orderError.value = false
@@ -169,7 +159,6 @@ export const usePayment = () => {
   }
 
   return {
-    // state
     items,
     total,
     deliveryFee,
@@ -184,7 +173,6 @@ export const usePayment = () => {
     khqrLoading,
     khqrError,
     user,
-    // actions
     openPayment,
     closePayment,
     generateKhqr,

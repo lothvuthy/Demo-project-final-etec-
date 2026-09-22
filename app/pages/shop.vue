@@ -153,7 +153,7 @@ const pageTitle = computed(() => {
                   {{ category.name }}
                 </span>
 
-                <!-- Product count -->
+                
                 <span
                   :class="[
                     'text-xs',
@@ -230,7 +230,7 @@ const pageTitle = computed(() => {
             </p>
 
             <div class="mt-5 flex gap-3">
-              <!-- Clear Search -->
+              
               <button
                 v-if="search"
                 type="button"

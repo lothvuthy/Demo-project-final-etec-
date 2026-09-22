@@ -8,12 +8,7 @@ import { usePayment } from "~/composables/usePayment";
 
 const { items, subtotal, originalSubtotal, discountTotal, remove, updateQty } = useCart();
 const { openPayment } = usePayment();
-
-// Simple flat delivery fee, free above $150 — presentation only, not a
-// real shipping calculation.
 const deliveryFee = computed(() => (subtotal.value === 0 || subtotal.value >= 150 ? 0 : 15));
-
-// Demo promo code (client-side only — no backend for real codes)
 const promoCode = ref("");
 const promoApplied = ref(false);
 const promoError = ref("");
@@ -42,7 +37,7 @@ const goToCheckout = () => {
 
 <template>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-    <!-- Breadcrumb -->
+    
     <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
       <NuxtLink to="/" class="hover:text-orange-500">Home</NuxtLink>
       <span>›</span>
@@ -54,7 +49,7 @@ const goToCheckout = () => {
     </h1>
 
     <div v-if="items.length" class="grid lg:grid-cols-3 gap-6">
-      <!-- Items -->
+      
       <div class="lg:col-span-2 border border-gray-200 rounded-2xl divide-y divide-gray-100">
         <div
           v-for="item in items"
@@ -115,7 +110,7 @@ const goToCheckout = () => {
         </div>
       </div>
 
-      <!-- Order Summary -->
+      
       <div class="border border-gray-200 rounded-2xl p-6 h-fit">
         <h2 class="text-xl font-bold text-gray-900 mb-5">Order Summary</h2>
 

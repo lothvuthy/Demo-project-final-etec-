@@ -6,7 +6,7 @@
       <h2 class="text-lg sm:text-xl font-bold text-gray-800 text-center mb-2">Forgot Password?</h2>
       <p class="text-gray-500 text-sm text-center mb-5 sm:mb-7">Enter your email and we'll send you a link to reset your password.</p>
 
-      <!-- Forgot Password Form -->
+      
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
@@ -53,7 +53,6 @@ import { ref } from 'vue'
 
 
 const API_FORGOT_URL = '/api/auth/forgot-password'
-// Example full URL: 'http://localhost:5000/api/auth/forgot-password'
 
 
 const form = ref({

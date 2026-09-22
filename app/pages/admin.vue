@@ -26,15 +26,11 @@ const messages = ref<any[]>([])
 const orders = ref<any[]>([])
 
 const categories = ref<any[]>([])
-
-// --- Products: search + filters ---
 const searchInput = ref('')
 const searchQuery = ref('')
 const showFilters = ref(false)
 const defaultFilters = () => ({ category: 'all', minPrice: '', maxPrice: '', onSale: false, sort: 'default' })
 const filters = ref(defaultFilters())
-
-// --- Products: "Add product" popup ---
 const emptyForm = () => ({ name: '', category: '', price: '', oldPrice: '', discount: '', rating: '5', reviews: '0', image: '' })
 const form = ref(emptyForm())
 const showAddModal = ref(false)
@@ -91,7 +87,6 @@ const applySearch = () => { searchQuery.value = searchInput.value }
 const clearSearch = () => { searchInput.value = ''; searchQuery.value = '' }
 const resetFilters = () => { filters.value = defaultFilters() }
 const clearAll = () => { clearSearch(); resetFilters() }
-// Emptying the box by hand should also bring every product back.
 watch(searchInput, (value) => { if (!value.trim()) searchQuery.value = '' })
 watch(() => form.value.image, () => { imageFailed.value = false })
 
@@ -101,8 +96,6 @@ const stats = computed(() => ({
   messages: messages.value.length,
   orders: orders.value.length
 }))
-
-// --- Dashboard: users charts (plain SVG/CSS, no chart library needed) ---
 const DONUT_R = 48
 const DONUT_C = 2 * Math.PI * DONUT_R
 
@@ -126,8 +119,6 @@ const roleSegments = computed(() => {
     return segment
   })
 })
-
-// Cart items and wishlist size for the 6 most active users
 const userActivity = computed(() =>
   users.value
     .map(u => ({
@@ -286,8 +277,6 @@ const select = (item: AdminSection) => {
 const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && showAddModal.value) closeAddModal()
 }
-
-// Stop the page behind the popup from scrolling while it is open.
 watch(showAddModal, (open) => { document.body.style.overflow = open ? 'hidden' : '' })
 
 onMounted(() => {
@@ -356,7 +345,7 @@ onBeforeUnmount(() => {
               <div class="flex items-center justify-between mb-5"><h2 class="font-bold text-lg">Users overview</h2><button class="text-sm text-orange-500 font-semibold" @click="select('users')">View all</button></div>
 
               <div v-if="users.length">
-                <!-- Donut: admins vs customers -->
+                
                 <div class="flex flex-col items-center gap-6 sm:flex-row">
                   <div class="relative h-36 w-36 shrink-0">
                     <svg viewBox="0 0 120 120" class="h-full w-full" role="img" :aria-label="`${roleStats.admins} admins and ${roleStats.customers} customers`">
@@ -375,7 +364,7 @@ onBeforeUnmount(() => {
                   </ul>
                 </div>
 
-                <!-- Bars: cart items and wishlist size per user -->
+                
                 <div class="mt-7 border-t border-gray-100 pt-5">
                   <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
                     <h3 class="text-sm font-semibold text-gray-700">Cart and wishlist by user</h3>
@@ -402,7 +391,7 @@ onBeforeUnmount(() => {
         </section>
 
         <section v-else-if="active === 'products'">
-          <!-- Toolbar: search, filters, add -->
+          
           <div class="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center">
             <form class="flex flex-1 items-center gap-2" role="search" @submit.prevent="applySearch">
               <div class="relative flex-1">
@@ -422,7 +411,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <!-- Filter panel -->
+          
           <div v-if="showFilters" class="mb-4 rounded-2xl border border-gray-100 bg-white p-4 sm:p-5">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <label class="block"><span class="field-label">Category</span>
@@ -508,7 +497,7 @@ onBeforeUnmount(() => {
       </footer>
     </main>
 
-    <!-- Add product popup -->
+    
     <Transition name="modal">
       <div v-if="showAddModal" class="fixed inset-0 z-60 flex items-end justify-center bg-gray-950/50 sm:items-center sm:p-6" @click.self="closeAddModal">
         <div class="modal-card max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl" role="dialog" aria-modal="true" aria-labelledby="add-product-title">

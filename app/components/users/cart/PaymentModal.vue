@@ -49,7 +49,7 @@ const handleDone = () => {
             <X :size="16" />
           </button>
 
-          <!-- Success -->
+          
           <div v-if="paid" class="bg-white rounded-2xl p-7 text-center shadow-xl">
             <CheckCircle2 :size="48" class="text-green-500 mx-auto mb-3" />
             <h3 class="text-lg font-black text-gray-900">Payment Successful</h3>
@@ -66,7 +66,7 @@ const handleDone = () => {
             </button>
           </div>
 
-          <!-- Payment succeeded but saving the order failed -->
+          
           <div v-else-if="orderError" class="bg-white rounded-2xl p-7 text-center shadow-xl">
             <XCircle :size="48" class="text-red-500 mx-auto mb-3" />
             <h3 class="text-lg font-black text-gray-900">Payment Received, Order Not Saved</h3>
@@ -84,10 +84,10 @@ const handleDone = () => {
             </button>
           </div>
 
-          <!-- KHQR card -->
+          
           <template v-else>
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-              <!-- Ribbon banner -->
+              
               <div
                 class="relative h-12 bg-red-600 flex items-center justify-center"
                 style="clip-path: polygon(0 0, 100% 0, 100% 68%, 86% 100%, 86% 68%, 0 68%)"
@@ -105,12 +105,12 @@ const handleDone = () => {
                 <div class="border-t border-dashed border-gray-200 my-4"></div>
 
                 <div class="flex items-center justify-center min-h-64">
-                  <!-- Loading -->
+                  
                   <div v-if="khqrLoading" class="w-60 h-60 flex items-center justify-center">
                     <Loader2 :size="28" class="animate-spin text-gray-400" />
                   </div>
 
-                  <!-- Error -->
+                  
                   <div v-else-if="khqrError" class="w-full text-center px-2">
                     <p class="text-xs text-red-500">{{ khqrError }}</p>
                     <button
@@ -130,7 +130,7 @@ const handleDone = () => {
                     </button>
                   </div>
 
-                  <!-- QR image -->
+                  
                   <img
                     v-else-if="qrImage"
                     :src="qrImage"

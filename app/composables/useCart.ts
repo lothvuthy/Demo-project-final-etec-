@@ -10,31 +10,21 @@ export interface CartLine {
   qty: number
 }
 
-/**
- * Cart state, stored per-user on the json-server backend (the user's
- * `cart` field). Adding to cart requires login, same as the wishlist.
- */
+
 export const useCart = () => {
   const { user, isLoggedIn, updateUser } = useAuth()
 
   const items = computed<CartLine[]>(() => user.value?.cart ?? [])
 
   const count = computed(() => items.value.reduce((sum, i) => sum + i.qty, 0))
-
-  // Net amount actually charged (uses each line's current price)
   const subtotal = computed(() => items.value.reduce((sum, i) => sum + i.qty * i.price, 0))
-
-  // "Original" amount before discounts (uses oldPrice when known)
   const originalSubtotal = computed(() =>
     items.value.reduce((sum, i) => sum + i.qty * (i.oldPrice ?? i.price), 0)
   )
 
   const discountTotal = computed(() => Math.max(0, originalSubtotal.value - subtotal.value))
 
-  /**
-   * Add a product to the cart. Returns `false` if the user isn't logged
-   * in, so the caller can redirect them to the login page.
-   */
+  
   const add = async (
     product: { id: string | number; name: string; price: number; oldPrice?: number; image: string },
     qty = 1

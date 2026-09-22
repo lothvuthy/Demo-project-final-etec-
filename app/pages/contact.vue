@@ -1,13 +1,13 @@
 <template>
   <div class="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
     <div class="max-w-7xl mx-auto">
-      <!-- ===== Main Layout: 2 Columns on Desktop / 1 Column on Mobile ===== -->
+      
       <div class="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start">
-        <!-- ====================================== -->
-        <!-- LEFT SIDE: Heading + Illustration + Support Cards -->
-        <!-- ====================================== -->
+        
+        
+        
         <div class="space-y-6 sm:space-y-8">
-          <!-- Heading + Illustration Row -->
+          
           <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
             <div class="shrink-0">
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
@@ -15,30 +15,30 @@
               </h1>
               <p class="text-base sm:text-lg text-gray-600 mt-2 sm:mt-3">Our team is ready to help you</p>
             </div>
-            <!-- Team Illustration -->
+            
             <div class="shrink-0 w-full sm:w-44 lg:w-52 flex justify-center sm:justify-end">
               <svg viewBox="0 0 220 160" class="w-full h-auto">
-                <!-- Chat bubble -->
+                
                 <circle cx="190" cy="28" r="22" fill="#F97316" opacity="0.12"/>
                 <circle cx="190" cy="28" r="14" fill="#F97316" opacity="0.25"/>
                 <text x="184" y="34" font-size="16" fill="#F97316">💬</text>
-                <!-- Team characters -->
+                
                 <g transform="translate(20, 15)">
-                  <!-- Person 1 -->
+                  
                   <circle cx="35" cy="40" r="18" fill="#FF7A30"/>
                   <rect x="18" y="55" width="34" height="30" rx="5" fill="#1F5ED9"/>
                   <path d="M12 46 L35 28 L58 46" stroke="#FF7A30" stroke-width="3.5" fill="none"/>
-                  <!-- Person 2 (with headset) -->
+                  
                   <circle cx="80" cy="30" r="18" fill="#FBBF24"/>
                   <rect x="62" y="45" width="36" height="32" rx="5" fill="#3B82F6"/>
-                  <!-- Headset -->
+                  
                   <rect x="68" y="14" width="24" height="12" rx="5" stroke="#374151" stroke-width="2.5" fill="none"/>
                   <circle cx="62" cy="20" r="5" fill="#374151"/>
                   <circle cx="98" cy="20" r="5" fill="#374151"/>
-                  <!-- Person 3 -->
+                  
                   <circle cx="125" cy="40" r="18" fill="#FBBF24"/>
                   <rect x="107" y="55" width="36" height="30" rx="5" fill="#FF7A30"/>
-                  <!-- Person 4 -->
+                  
                   <circle cx="80" cy="75" r="18" fill="#FBBF24"/>
                   <rect x="62" y="90" width="36" height="26" rx="5" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
                   <path d="M68 90 L80 98 L92 90" stroke="#374151" stroke-width="2.5" fill="none"/>
@@ -46,9 +46,9 @@
               </svg>
             </div>
           </div>
-          <!-- ===== Three Support Cards Row ===== -->
+          
           <div class="grid grid-cols-3 gap-3 sm:gap-4">
-            <!-- Live Chat Card -->
+            
             <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 relative">
               <button class="absolute top-3 right-3 w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors text-lg font-medium">
                 ›
@@ -62,7 +62,7 @@
               <p class="font-medium text-gray-600 text-xs sm:text-sm mt-1">Available</p>
               <p class="text-xs text-gray-400 mt-1">Always here to help</p>
             </div>
-            <!-- Email Support Card -->
+            
             <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 relative">
               <button class="absolute top-3 right-3 w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors text-lg font-medium">
                 ›
@@ -76,7 +76,7 @@
               <p class="font-medium text-gray-600 text-xs sm:text-sm mt-1">Get in touch</p>
               <p class="text-xs text-gray-400 mt-1">support@shopio.com</p>
             </div>
-            <!-- FAQs Card -->
+            
             <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 relative">
               <button class="absolute top-3 right-3 w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors text-lg font-medium">
                 ›
@@ -92,11 +92,11 @@
             </div>
           </div>
         </div>
-        <!-- ====================================== -->
-        <!-- RIGHT SIDE: Contact Form Card -->
-        <!-- ====================================== -->
+        
+        
+        
         <div class="bg-white rounded-2xl shadow-md p-5 sm:p-6 lg:p-8">
-          <!-- Form Header: Back Arrow | Title | Dropdown Arrow -->
+          
           <div class="flex items-center justify-between mb-6">
             <NuxtLink to="/" class="text-gray-600 hover:text-orange-500 transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,9 +110,9 @@
               </svg>
             </button>
           </div>
-          <!-- Contact Form -->
+          
           <form @submit.prevent="handleSubmit" class="space-y-4">
-            <!-- Full Name -->
+            
             <div>
               <input
                 v-model="form.fullName"
@@ -122,7 +122,7 @@
                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-100 text-gray-700 text-base"
               />
             </div>
-            <!-- Email -->
+            
             <div>
               <input
                 v-model="form.email"
@@ -132,7 +132,7 @@
                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-100 text-gray-700 text-base"
               />
             </div>
-            <!-- Order Number Dropdown -->
+            
             <div>
               <select
                 v-model="form.orderNumber"
@@ -144,7 +144,7 @@
                 <option value="3">Order #12347</option>
               </select>
             </div>
-            <!-- Subject -->
+            
             <div>
               <input
                 v-model="form.subject"
@@ -154,7 +154,7 @@
                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-100 text-gray-700 text-base"
               />
             </div>
-            <!-- Message Textarea -->
+            
             <div>
               <textarea
                 v-model="form.message"
@@ -164,7 +164,7 @@
                 class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-100 text-gray-700 text-base resize-none"
               ></textarea>
             </div>
-            <!-- Login notice -->
+            
             <p v-if="!isLoggedIn" class="text-sm text-gray-500 bg-gray-50 border border-gray-100 rounded-lg p-3">
               Please
               <NuxtLink to="/auth/login" class="text-orange-500 font-semibold hover:underline">sign in</NuxtLink>
@@ -173,7 +173,7 @@
               to send us a message.
             </p>
 
-            <!-- Send Message Button -->
+            
             <button
               type="submit"
               :disabled="loading || !isLoggedIn"
@@ -181,7 +181,7 @@
             >
               {{ loading ? "Sending..." : "Send Message" }}
             </button>
-            <!-- Success / Error Message -->
+            
             <p
               v-if="message.text"
               :class="[
@@ -202,10 +202,6 @@
 import { ref, watchEffect } from 'vue'
 import { useAuth } from '~/composables/useAuth'
 import { useLocalStore } from '~/composables/useLocalStore'
-
-// ==============================================
-// 🔌 API CONFIGURATION — json-server, same backend as auth/cart/wishlist
-// ==============================================
 const API_MESSAGES_URL = 'http://localhost:8000/messages'
 
 const { user, isLoggedIn } = useAuth()
@@ -218,8 +214,6 @@ const form = ref({
   subject: '',
   message: ''
 })
-
-// Prefill name/email once we know who's logged in
 watchEffect(() => {
   if (user.value) {
     form.value.fullName = form.value.fullName || user.value.name || ''
@@ -229,15 +223,11 @@ watchEffect(() => {
 
 const loading = ref(false)
 const message = ref({ text: '', type: '' })
-
-// ========== Handle Form Submission ==========
 const handleSubmit = async () => {
   if (!isLoggedIn.value) {
     message.value = { text: '⚠️ Please sign in first to send a message.', type: 'error' }
     return
   }
-
-  // Validation
   if (!form.value.fullName.trim() || !form.value.email.trim() || !form.value.subject.trim() || !form.value.message.trim()) {
     message.value = { text: '⚠️ Please fill in all required fields.', type: 'error' }
     return
@@ -245,7 +235,6 @@ const handleSubmit = async () => {
   loading.value = true
   message.value = { text: '', type: '' }
   try {
-    // 📡 Send data to the json-server backend
     await $fetch(API_MESSAGES_URL, {
       method: 'POST',
       body: {
@@ -254,9 +243,7 @@ const handleSubmit = async () => {
         createdAt: new Date().toISOString()
       }
     })
-    // ✅ Success
     message.value = { text: '✅ Message sent successfully! We will reply soon.', type: 'success' }
-    // Reset form (keep name/email prefilled)
     form.value = {
       fullName: user.value?.name || '',
       email: user.value?.email || '',

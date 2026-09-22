@@ -83,7 +83,7 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
   <div v-if="product" class="min-h-screen bg-white">
     <div class="max-w-6xl mx-auto px-6 py-12">
       <div class="grid md:grid-cols-2 gap-12">
-        <!-- Product image -->
+        
         <div class="relative rounded-3xl overflow-hidden bg-gray-50 aspect-square">
           <img
             :src="product.image"
@@ -98,13 +98,13 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
           </span>
         </div>
 
-        <!-- Details -->
+        
         <div>
           <h1 class="text-3xl md:text-4xl font-black text-gray-900 mt-1 mb-1.5">
     {{ product.name }}
   </h1>
 
-          <!-- Rating -->
+          
           <div class="flex items-center gap-2 mb-4">
             <div class="flex text-yellow-500">
               <Star
@@ -137,7 +137,7 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
             30-day returns included.
           </p>
 
-          <!-- Trust badges -->
+          
           <div class="flex flex-wrap gap-4 mb-8 text-sm text-gray-500">
             <div class="flex items-center gap-2">
               <Truck :size="18" class="text-orange-500" />
@@ -149,7 +149,7 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
             </div>
           </div>
 
-          <!-- Quantity -->
+          
           <div class="flex items-center gap-6 mb-8">
             <span class="text-sm font-semibold text-gray-900">Quantity</span>
             <div class="flex items-center border border-gray-200 rounded-full">
@@ -159,7 +159,7 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
             </div>
           </div>
 
-          <!-- Actions -->
+          
           <div class="flex flex-row items-center gap-2 sm:gap-3">
             <button
               class="flex-1 min-w-0 inline-flex items-center justify-center gap-2 bg-orange-500 text-white px-4 sm:px-8 py-3.5 rounded-full font-semibold hover:bg-orange-600 transition-colors disabled:opacity-70"
@@ -202,7 +202,7 @@ const fullStars = computed(() => Math.round(product.value?.rating ?? 0));
         </div>
       </div>
 
-      <!-- Related products -->
+      
       <section v-if="related.length" class="mt-20">
         <h2 class="text-2xl font-bold text-gray-900 mb-8">
           You May Also Like

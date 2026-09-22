@@ -18,11 +18,7 @@ export interface AuthUser {
 const STORAGE_KEY = 'eshop_user'
 const USERS_KEY = 'eshop_users'
 
-/**
- * Shared, reactive auth state. `useState` makes this a singleton across the
- * whole app, so the Navbar, product cards, wishlist page, etc. all update
- * instantly when the user logs in/out or their cart/wishlist changes.
- */
+
 export const useAuth = () => {
   const config = useRuntimeConfig()
   const apiUsersUrl = config.public.apiBase ? `${config.public.apiBase}/users` : ''
@@ -46,9 +42,6 @@ export const useAuth = () => {
   const saveLocalUsers = (users: AuthUser[]) => {
     if (import.meta.client) localStorage.setItem(USERS_KEY, JSON.stringify(users))
   }
-
-  // Called once on app startup (see app/plugins/auth.client.ts) to restore
-  // the session from localStorage.
   const loadFromStorage = () => {
     if (import.meta.server) return
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -83,7 +76,6 @@ export const useAuth = () => {
         return await $fetch<AuthUser[]>(apiUsersUrl)
         .then((users) => users.find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null)
       } catch {
-        // Fall back to browser storage when the API is temporarily unavailable.
       }
     }
     return localUsers().find((item) => item.email.toLowerCase() === email.toLowerCase() && item.password === password) ?? null
@@ -94,7 +86,6 @@ export const useAuth = () => {
       try {
         return await $fetch<AuthUser>(apiUsersUrl, { method: 'POST', body: details })
       } catch {
-        // Fall back to browser storage when the API is unavailable.
       }
     }
     const created = { ...details, id: `local-${Date.now()}` } as AuthUser
@@ -102,11 +93,7 @@ export const useAuth = () => {
     return created
   }
 
-  /**
-   * Persist a partial change (cart / wishlist / profile fields) to the
-   * json-server backend, then merge the server response back into local
-   * state + localStorage so every component reacts immediately.
-   */
+
   const updateUser = async (patch: Partial<AuthUser>) => {
     if (!user.value) return
     const id = user.value.id
@@ -119,7 +106,6 @@ export const useAuth = () => {
         setUser({ ...user.value, ...updated })
         return
       } catch {
-        // Fall back to browser storage when the API is unavailable.
       }
     }
     const updated = { ...user.value, ...patch }
