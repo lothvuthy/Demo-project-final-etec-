@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
+  // GitHub Pages serves project sites below /<repository-name>/.
   app: {
     baseURL: '/Demo-project-final-etec-/',
     head: {
